@@ -29,7 +29,6 @@ import folium
 from streamlit_folium import folium_static
 
 
-
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -61,6 +60,8 @@ df['Ecoli_float'] = df['Ecoli_float'].astype('float')
 df['Year'] = df['Sample Date'].str.split('/').str[2]
 df['Month'] = df['Sample Date'].str.split('/').str[0]
 df['Day'] = df['Sample Date'].str.split('/').str[1]
+
+df = pd.read_csv('water_data_preprocessed.csv')
 
 # apparently, there was a type-error
 df['Sample Site'] = df['Sample Site'].astype(str)
