@@ -30,8 +30,8 @@ from streamlit_folium import folium_static
 
 
 
-import warnings
-warnings.filterwarnings("ignore")
+# import warnings
+# warnings.filterwarnings("ignore")
 
 # df_sample = pd.read_csv('data/Drinking_Water_Quality_Distribution_Monitoring_Data.csv')
 # df_sites = pd.read_excel('data/OpenData_Distribution_Water_Quality_Sampling_Sites_Updated_2021-0618.xlsx')
