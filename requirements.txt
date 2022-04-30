@@ -1,0 +1,8 @@
+altair
+pandas
+streamlit
+matplotlib
+sklearn
+numpy
+datetime
+bokeh==2.4.1
