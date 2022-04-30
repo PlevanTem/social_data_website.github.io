@@ -14,10 +14,7 @@ from bokeh.layouts import layout
 from bokeh.models.widgets import Tabs, Panel
 from bokeh.io import curdoc
 from bokeh.plotting import figure
-from bokeh.models import (
-  GMapPlot, GMapOptions, ColumnDataSource, Circle, LogColorMapper, BasicTicker, ColorBar,
-    DataRange1d, PanTool, WheelZoomTool, BoxSelectTool
-)
+
 from bokeh.models.mappers import ColorMapper, LinearColorMapper
 from bokeh.palettes import Viridis5
 
