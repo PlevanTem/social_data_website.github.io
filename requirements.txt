@@ -6,3 +6,6 @@ sklearn
 numpy
 datetime
 bokeh==2.4.1
+folium
+streamlit_folium
+pyproj
