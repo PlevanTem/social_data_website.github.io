@@ -4,7 +4,7 @@ import streamlit as st
 # import libraries
 import pandas as pd
 import numpy as np
-import pyproj
+#import pyproj
 import matplotlib.pyplot as plt
 from bokeh.plotting import figure
 from bokeh.io import show, output_notebook, reset_output
@@ -30,37 +30,39 @@ from streamlit_folium import folium_static
 
 
 
-import warnings
-warnings.filterwarnings("ignore")
+# import warnings
+# warnings.filterwarnings("ignore")
 
-df_sample = pd.read_csv('data/Drinking_Water_Quality_Distribution_Monitoring_Data.csv')
-df_sites = pd.read_excel('data/OpenData_Distribution_Water_Quality_Sampling_Sites_Updated_2021-0618.xlsx')
-df = pd.merge(df_sample, df_sites, on='Sample Site')
+# df_sample = pd.read_csv('data/Drinking_Water_Quality_Distribution_Monitoring_Data.csv')
+# df_sites = pd.read_excel('data/OpenData_Distribution_Water_Quality_Sampling_Sites_Updated_2021-0618.xlsx')
+# df = pd.merge(df_sample, df_sites, on='Sample Site')
 
 
-source_crs = 'epsg:2263' # Coordinate system of the file from https://aem.run/posts/2021-07-02-learning-the-basics-of-gis-mapping-with-leaflet/
-target_crs = 'epsg:4326' # Global lat-lon coordinate system
+# source_crs = 'epsg:2263' # Coordinate system of the file from https://aem.run/posts/2021-07-02-learning-the-basics-of-gis-mapping-with-leaflet/
+# target_crs = 'epsg:4326' # Global lat-lon coordinate system
 
-polar_to_latlon = pyproj.Transformer.from_crs(source_crs, target_crs)
-df['lat'], df['lon'] = polar_to_latlon.transform(df['X - Coordinate'], df['Y - Coordinate'])
+# polar_to_latlon = pyproj.Transformer.from_crs(source_crs, target_crs)
+# df['lat'], df['lon'] = polar_to_latlon.transform(df['X - Coordinate'], df['Y - Coordinate'])
 
-df.drop(columns=['X - Coordinate', 'Y - Coordinate'], inplace=True)
+# df.drop(columns=['X - Coordinate', 'Y - Coordinate'], inplace=True)
 
-df['Fluoride (mg/L)'].replace({'<0.3':'0.3'}, inplace=True)
-df['Fluoride (mg/L)'] = df['Fluoride (mg/L)'].astype('float')
+# df['Fluoride (mg/L)'].replace({'<0.3':'0.3'}, inplace=True)
+# df['Fluoride (mg/L)'] = df['Fluoride (mg/L)'].astype('float')
 
-df['Turbidity (NTU)'].replace({'<0.10':'0.1'}, inplace=True)
-df['Turbidity (NTU)'] = df['Turbidity (NTU)'].astype('float')
+# df['Turbidity (NTU)'].replace({'<0.10':'0.1'}, inplace=True)
+# df['Turbidity (NTU)'] = df['Turbidity (NTU)'].astype('float')
 
-df['Coliform_float'] = df['Coliform (Quanti-Tray) (MPN /100mL)'].replace({'<1':'0', '>200.5':'201'})
-df['Coliform_float'] = df['Coliform_float'].astype('float')
+# df['Coliform_float'] = df['Coliform (Quanti-Tray) (MPN /100mL)'].replace({'<1':'0', '>200.5':'201'})
+# df['Coliform_float'] = df['Coliform_float'].astype('float')
 
-df['Ecoli_float'] = df['E.coli(Quanti-Tray) (MPN/100mL)'].replace({'<1':'0', '>200.5':'201'})
-df['Ecoli_float'] = df['Ecoli_float'].astype('float')
+# df['Ecoli_float'] = df['E.coli(Quanti-Tray) (MPN/100mL)'].replace({'<1':'0', '>200.5':'201'})
+# df['Ecoli_float'] = df['Ecoli_float'].astype('float')
 
-df['Year'] = df['Sample Date'].str.split('/').str[2]
-df['Month'] = df['Sample Date'].str.split('/').str[0]
-df['Day'] = df['Sample Date'].str.split('/').str[1]
+# df['Year'] = df['Sample Date'].str.split('/').str[2]
+# df['Month'] = df['Sample Date'].str.split('/').str[0]
+# df['Day'] = df['Sample Date'].str.split('/').str[1]
+
+df = pd.read_csv('data/water_data_preprocessed.csv')
 
 # apparently, there was a type-error
 df['Sample Site'] = df['Sample Site'].astype(str)
