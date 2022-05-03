@@ -101,8 +101,14 @@ for index,row in df_loc.iterrows():
 
 
 def app():
-    st.markdown('Something here')
-    
-    st.video('https://www.youtube.com/watch?v=6YIZCVkfY5M')
+    st.markdown(### 'What do we all need for living? - Air, Water and Love right?')
+    st.markdown('Being able to drink water safely is a basic human right and the Sustainability Development Goal 6: Clean Water and Sanitation')
+    st.markdown('This is why one of the main goals of our analysis is to investigate the water quality in NYC by analyzing data from the Water sampling stations in New York.')
+      
+    st.markdown(### 'But how can you image these Water sampling stations in NYC and how do they work?')
+ 
+    st.video('https://www.youtube.com/watch?v=6YIZCVkfY5M')#
+      
+    st.markdown('If you have been or live in NYC, you have probably seen them before! And now you know what they are for!')
 
     folium_static(ny_map)
