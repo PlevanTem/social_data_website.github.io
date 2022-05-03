@@ -102,5 +102,7 @@ for index,row in df_loc.iterrows():
 
 def app():
     st.markdown('Something here')
+    
+    st.video('https://www.youtube.com/watch?v=6YIZCVkfY5M')
 
     folium_static(ny_map)
