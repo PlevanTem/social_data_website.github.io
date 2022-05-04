@@ -107,10 +107,10 @@ def app():
       
     st.markdown('### **But how can you image these Water sampling stations in NYC and how do they work?**')
  
-    st.video('https://www.youtube.com/watch?v=6YIZCVkfY5M')#
+    st.video('https://www.youtube.com/watch?v=6YIZCVkfY5M')
       
-    st.markdown('###If you have been or live in NYC, you have probably seen them before! And now you know what they are for!')
+    st.markdown('###**If you have been or live in NYC, you have probably seen them before! And now you know what they are for!**')
     st.markdown('They are spread all over the city to check the water quality in every part of the city and every of the five boroughs')
-    st.markdown('Below you can explore the exact locations of the sample stations and maybe find to the nearest to where you are living or staying to check it out the next time you walk by!´)
+    st.markdown('Below you can explore the exact locations of the sample stations and maybe find to the nearest to where you are living or staying to check it out the next time you walk by!')
 
     folium_static(ny_map)
