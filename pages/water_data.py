@@ -51,6 +51,8 @@ for index,row in df_loc.iterrows():
 
 #fig = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site", color="Water_quality", animation_frame='Year - Month', mapbox_style='carto-positron', category_orders={'Year - Month':list(np.sort(df_water['Year - Month'].unique()))}, zoom=8)
 
+fig = px.scatter(df, x='lat', y='lon', hover_name='Sample Site')
+
 def app():
     st.markdown('### **What do we all need for living? - Air, Water and Love right?**')
     st.markdown('Being able to drink water safely is a basic human right and the Sustainability Development Goal 6: Clean Water and Sanitation')
@@ -75,4 +77,5 @@ def app():
     st.markdown('* E.coli(Quanti-Tray) (MPN/100mL) ')
 
     st.header("Development of the water quality for the Sample Stations from 2015 - 2022")
+    st.plotly_chart(fig)
     #st.plotly_chart(fig)
