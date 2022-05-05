@@ -20,8 +20,8 @@ from bokeh.models import (
 )
 from bokeh.models.mappers import ColorMapper, LinearColorMapper
 from bokeh.palettes import Viridis5
-pip install plotly
-import plotly.express as px
+#pip install plotly
+#import plotly.express as px
 
 #%matplotlib inline
 
@@ -83,4 +83,4 @@ def app():
     folium_static(ny_map)
     
     st.header("Development of the water quality for the Sample Stations from 2015 - 2022")
-    st.plotly_chart(fig)
+    # st.plotly_chart(fig)
