@@ -8,6 +8,8 @@ import ast
 import datetime
 import pandasql as ps
 import geopandas as gpd
+import plotly
+import plotly.figure_factory as ff
 
 from datetime import datetime
 
@@ -18,6 +20,8 @@ from folium import plugins
 from folium.plugins import HeatMap
 from folium.plugins import TimeSliderChoropleth
 from branca.element import Figure
+
+
 
 from streamlit_folium import folium_static
 
@@ -159,6 +163,161 @@ folium.LayerControl().add_to(nyc_map)
 nyc_map
 
 def app():
+
+    st.markdown(
+        """
+        ### About this page:
+        This page explains the Traffic volume observed.
+
+        ### About the dataset:
+
+        #### Content:
+
+        Traffic volume counts collected by DOT for New York Metropolitan Transportation Council (NYMTC) to validate the New York Best Practice Model (NYBPM). 
+
+
+        #### Context
+
+        This is a dataset hosted by the City of New York. The city has an open data platform found [here](https://opendata.cityofnewyork.us/) and they update their information according the amount of data that is brought in.
+        """
+    )
+
+    st.markdown(
+        """
+        #### Steps to create the visualisations:
+
+        1. Since the water data, that we are also working with, only contains data from 2015 and onwards, we will restrict this dataset to the same timeframe.
+
+        2. Since we only have `Roadway Name` as well as `from` and `to` address, we want to enrich this data with location data (latitude & longitude). 
+
+        3. The main purpose of this is because it seems like the data-table has split the road across 2 rows in terms of direction. But we don't really care if the traffic in 1 side is different from the traffic on the other side heading the opposite direction. To us, it's the same road, so we combine the traffic on either sides together.
+        """
+    )
+
+    st.markdown(
+        """
+        We want to be able to see similarities between the traffic and the other datasets. To be able to do that, we have to find out which borough the specific street is in.
+
+        """
+    )
+
+    #st.image('images/new_york_traffic.jpg')
+    
+    
     st.markdown('Underneath here, you can see the NYC map of the traffic')
 
     folium_static(nyc_map)
+
+
+    st.markdown(
+        """
+        ## General stats about the traffic data set
+        """
+    )
+
+    bins, heights = np.unique(df['Traffic_Volume'], return_counts=True)
+    group_labels = ['Traffic Volume']
+    # have to be a list of lists
+    heights = [heights]
+
+    fig = ff.create_distplot(
+        heights, 
+        group_labels=group_labels,
+        bin_size=bins)
+
+
+    st.markdown(
+        """
+        * Distribution of Traffic Volume in this dataset
+        """
+    )
+    st.plotly_chart(fig, use_container_width=True)
+    
+    st.markdown(
+        """
+        * Are people driving more in the weekend?
+        """
+    )
+    
+    st.bar_chart(
+        df['Is_Weekend'].value_counts()
+        )
+    
+    st.markdown(
+        """
+        * How is the traffic looking during the day? (Aggregated over the years)
+        """
+    )
+
+    st.bar_chart(
+        df.groupby('Hour')['Traffic_Volume'].sum()
+        )
+
+
+    st.markdown(
+        """
+        * How is the traffic in the different boroughs? (Aggregated over the years)
+        """
+    )
+
+    st.bar_chart(
+        df.groupby('borough_roadway')['Traffic_Volume'].sum()
+        )
+
+
+    st.markdown(
+        """
+        * How is the traffic count over the years?
+        """
+    )
+
+    st.bar_chart(
+        df.groupby('year')['Traffic_Volume'].sum().reset_index().set_index('year') # set_index to have proper xlabels
+    )
+
+    with st.expander("Plots for each of the boroughs and their traffic volume over the years"):
+        st.write("""
+            BOOM
+        """)
+
+        boroughs = sorted(df['borough_roadway'].unique().tolist())
+
+        for borough in range(len(boroughs)):
+            p = df[df.borough_roadway == boroughs[borough]].groupby('year')['Traffic_Volume'].sum().reset_index().set_index('year')
+            title=f'{boroughs[borough]} Traffic volume over the years',
+            st.markdown(f'{title}')
+            st.bar_chart(
+                p
+                )
+
+
+    with st.expander("Plots for each of the boroughs and their traffic volume the day (aggregated)"):
+        st.write("""
+            BOOM
+        """)
+
+        boroughs = sorted(df['borough_roadway'].unique().tolist())
+
+        for borough in range(len(boroughs)):
+            p = df[df.borough_roadway == boroughs[borough]].groupby('Hour')['Traffic_Volume'].sum().reset_index().set_index('Hour')
+            title=f'{boroughs[borough]} Traffic volume over the hours of the day',
+            st.markdown(f'{title}')
+            st.bar_chart(
+                p
+                )
+
+    with st.expander("Plots for each of the years and their traffic volume the day (aggregated)"):
+        st.write("""
+            BOOM
+        """)
+
+        years = sorted(df.year.unique().tolist())
+
+        for year in range(len(years)):
+            p = df[df['year'] == years[year]].groupby(['Hour'])['Traffic_Volume'].sum().reset_index().set_index('Hour')
+            title=f'{years[year]} Traffic volume over the hours of the day',
+            st.markdown(f'{title}')
+            st.bar_chart(
+                p
+                )
+        
