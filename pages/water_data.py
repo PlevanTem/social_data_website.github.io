@@ -20,6 +20,7 @@ from bokeh.models import (
 )
 from bokeh.models.mappers import ColorMapper, LinearColorMapper
 from bokeh.palettes import Viridis5
+pip install plotly
 import plotly.express as px
 
 #%matplotlib inline
