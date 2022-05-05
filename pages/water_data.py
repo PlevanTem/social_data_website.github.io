@@ -82,9 +82,13 @@ def app():
 
     folium_static(ny_map)
     
-    st.markdown('### **Now you have seen how the samples are taken and where the stations are - but what exactly is measured to ensure the Water quality?**')
-    st.markdown(' * Fruit')
+    st.markdown('### **Now you have seen how the samples are taken and where the stations are - but what exactly is measured?**')
+    st.markdown('There are the following 5 main indicators that are measured and important for the water quality.')
+    st.markdown('* Residual Free Chlorine (mg/L)')
+    st.markdown('* Turbidity (NTU)')
+    st.markdown('* Fluoride (mg/L)')
+    st.markdown('* Coliform (Quanti-Tray) (MPN /100mL)')
+    st.markdown('* E.coli(Quanti-Tray) (MPN/100mL) ')
 
-    
     st.header("Development of the water quality for the Sample Stations from 2015 - 2022")
     # st.plotly_chart(fig)
