@@ -83,15 +83,14 @@ def app():
     folium_static(ny_map)
     
     st.markdown('### **Now you have seen how the samples are taken and where the stations are - but what exactly is measured to ensure the Water quality?**')
-    """
+    st.markdown('
     * Fruit
       * Apple
       * Orange
       * Banana
     * Dairy
       * Milk
-      * Cheese
-     """
+      * Cheese')
 
     
     st.header("Development of the water quality for the Sample Stations from 2015 - 2022")
