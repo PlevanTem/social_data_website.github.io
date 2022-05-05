@@ -20,6 +20,7 @@ from bokeh.models import (
 )
 from bokeh.models.mappers import ColorMapper, LinearColorMapper
 from bokeh.palettes import Viridis5
+import plotly.express as px
 
 #%matplotlib inline
 
@@ -46,6 +47,24 @@ for index,row in df_loc.iterrows():
     folium.CircleMarker([row['lat'], row['lon']], popup=row['Sample Site'], color=row['color'],
             fill=True, opacity=0.5, radius = 2).add_to(ny_map)
 
+def animate_map(time_col):
+    fig = px.scatter_mapbox(df_water,
+              lat="lat" ,
+              lon="lon",
+              hover_name="Sample Site",
+              color="Water_quality",
+              animation_frame=time_col,
+              mapbox_style='carto-positron',
+              category_orders={
+              time_col:list(np.sort(df_water[time_col].unique()))
+              },                  
+              zoom=8)
+    return fig
+    
+fig = animate_map('Year - Month')
+    
+   
+
 
 def app():
     st.markdown('### **What do we all need for living? - Air, Water and Love right?**')
@@ -61,3 +80,6 @@ def app():
     st.markdown('Below you can explore the exact locations of the sample stations and maybe find to the nearest to where you are living or staying to check it out the next time you walk by!')
 
     folium_static(ny_map)
+    
+    st.header("Development of the water quality for the Sample Stations from 2015 - 2022")
+    st.plotly_chart(fig)
