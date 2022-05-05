@@ -11,3 +11,4 @@ streamlit_folium
 pyproj
 geopandas
 pandasql
+plotly
