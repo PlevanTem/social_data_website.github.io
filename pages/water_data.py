@@ -49,17 +49,8 @@ for index,row in df_loc.iterrows():
     folium.CircleMarker([row['lat'], row['lon']], popup=f'Sample Site: {pop}, Borough: {bor}', color=row['color'],
             fill=True, opacity=0.5, radius = 2).add_to(ny_map)
 
-fig = px.scatter_mapbox(df_water,
-              lat="lat" ,
-              lon="lon",
-              hover_name="Sample Site",
-              color="Water_quality",
-              animation_frame='Year - Month',
-              #mapbox_style='carto-positron',
-              category_orders={
-              'Year - Month':list(np.sort(df_water['Year - Month'].unique()))
-              },                  
-              #zoom=8)
+fig = px.scatter_mapbox(df_water, lat="lat" , lon="lon", hover_name="Sample Site", color="Water_quality", animation_frame='Year - Month', mapbox_style='carto-positron',
+              category_orders={'Year - Month':list(np.sort(df_water['Year - Month'].unique()))}, zoom=8)
 
 def app():
     st.markdown('### **What do we all need for living? - Air, Water and Love right?**')
