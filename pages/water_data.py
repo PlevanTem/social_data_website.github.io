@@ -48,21 +48,21 @@ for index,row in df_loc.iterrows():
     folium.CircleMarker([row['lat'], row['lon']], popup=row['Sample Site'], color=row['color'],
             fill=True, opacity=0.5, radius = 2).add_to(ny_map)
 
-def animate_map(time_col):
-    fig = px.scatter_mapbox(df_water,
-              lat="lat" ,
-              lon="lon",
-              hover_name="Sample Site",
-              color="Water_quality",
-              animation_frame=time_col,
-              mapbox_style='carto-positron',
-              category_orders={
-              time_col:list(np.sort(df_water[time_col].unique()))
-              },                  
-              zoom=8)
-    return fig
+#def animate_map(time_col):
+    #fig = px.scatter_mapbox(df_water,
+              #lat="lat" ,
+              #lon="lon",
+              #hover_name="Sample Site",
+              #color="Water_quality",
+              #animation_frame=time_col,
+              #mapbox_style='carto-positron',
+              #category_orders={
+              #time_col:list(np.sort(df_water[time_col].unique()))
+              #},                  
+              #zoom=8)
+    #return fig
     
-fig = animate_map('Year - Month')
+#fig = animate_map('Year - Month')
     
    
 
