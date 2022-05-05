@@ -51,7 +51,7 @@ for index,row in df_loc.iterrows():
 
 #fig = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site", color="Water_quality", animation_frame='Year - Month', mapbox_style='carto-positron', category_orders={'Year - Month':list(np.sort(df_water['Year - Month'].unique()))}, zoom=8)
 
-fig = px.scatter_mapbox(df, lat="lat", lon="lon", hover_name='Sample Site', color="Water_quality", animation_frame='Year - Month', mapbox_style='carto-positron')
+fig = px.scatter_mapbox(df, lat="lat", lon="lon", hover_name='Sample Site', color="Water_quality", animation_frame='Year - Month', mapbox_style='carto-positron', category_orders={'Year - Month':list(np.sort(df_water['Year - Month'].unique()))})
 
 def app():
     st.markdown('### **What do we all need for living? - Air, Water and Love right?**')
