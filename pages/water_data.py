@@ -168,14 +168,20 @@ def app():
     folium_static(ny_map)
     
     st.markdown('### **Now you have seen how the samples are taken and where the stations are - but what exactly is measured?**')
-    st.markdown('There are the following 5 main indicators that are measured and important for the water quality.')
-    st.markdown('* Residual Free Chlorine (mg/L)')
-    st.markdown('* Turbidity (NTU)')
-    st.markdown('* Fluoride (mg/L)')
-    st.markdown('* Coliform (Quanti-Tray) (MPN /100mL)')
-    st.markdown('* E.coli(Quanti-Tray) (MPN/100mL) ')
+    st.markdown('There are the following 5 main indicators that are measured and their allowable level in drinking water according to the WHO')
+    st.markdown('* Residual Free Chlorine (mg/L) - **5mg/L**')
+    st.markdown('* Turbidity (NTU) - **1 NTU**')
+    st.markdown('* Fluoride (mg/L) - **4 mg/L**')
+    st.markdown('* Coliform (Quanti-Tray) (MPN/100mL) - **0 MPN/100ml**')
+    st.markdown('* E.coli(Quanti-Tray) (MPN/100mL) - **0 MPN/100ml** ')
+    
+    st.markdown('These allowable limits were used to devide the levels for each indicator classifying the water as either good below the allowed limits from WHO (0) or bad being above the allowed limits (1)')
+    st.markdown('Also the overall indicator Water Quality was created that rates the overall water quality as good (1) if none of the indicators is above the allowed limits and bad if even one of does.')
+    st.markdown('Below you can explore the different indicators in the presented districts')
+    
+    st.markdown('### **Number of good and bad quality samples based on different indicators for each borough**')
+    st.bokeh_chart(tabs, use_container_width=True)
 
     st.header("Development of the water quality for the Sample Stations from 2015 - 2022")
     st.plotly_chart(fig)
     #st.plotly_chart(fig)
-    st.bokeh_chart(tabs, use_container_width=True)
