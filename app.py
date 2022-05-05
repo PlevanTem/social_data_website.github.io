@@ -11,14 +11,14 @@ from pages import main_page, recycling_data, traffic_data, water_data
 
 # Wide page
 st.set_page_config(page_title="Social Data And Visualization", page_icon="🐍", layout="wide", initial_sidebar_state="auto", menu_items=None,) 
-
-# Create an instance of the app 
+#
+## Create an instance of the app 
 app = MultiPage()
 
 # Title of the main page
-t1, t2 = st.columns((0.5,0.5))  
-t1.image('images/new_york_traffic.jpg')
-t2.title("Exploring Water Quality in New York City")
+#t1, t2 = st.columns((0.5,0.5))  
+#t1.image('images/new_york_traffic.jpg')
+st.title("Exploring Water Quality in New York City in combination with Recycling data and Traffic data")
 
 with st.expander("ℹ️ - About this app", expanded=False):
     st.write(
