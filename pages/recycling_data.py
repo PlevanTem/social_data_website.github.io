@@ -399,7 +399,18 @@ def app():
     
     st.markdown('## Insights about New York City community districts - who\'s the largest and least disposal maker?')
     st.plotly_chart(fig2)
-    st.markdown('Community 412 is the largest recycled region, with around 8000T materials collected, while community 101 had the least disposer, with only about 1/4 of 412\'s collection.')
+    st.markdown(
+        '''
+        The top 5 largest collected districts is Community 412,407,503,312 and 108.
+        while community 105,202,101,201,203 had the least collection tonnages.
+        **We wonder that is the more collection, the cleaner the district?**
+        So we checked [NYC Community District Profiles site](https://share.streamlit.io/plevantem/social_data_website.github.io/main/app.py)
+        Interestingly, we can see that among the top5 disposal collected district, 312, Brooklyn ranked low in terms of street cleaniess and 
+        disposal and recyle collection tonnages is not a good indicator for street cleanies and water quality.
+        According to the map, the western part of NYC in Manhattan were usually with less waste collection, combined with the NYC community district profile,
+        to some extent it relateds to the number local population of each district.
+        '''
+    )
     st.plotly_chart(fig3)
     st.markdown('From the map above, it\'s easier to compare the collection amount between 59 NYC communities and see the change by draging the slider.')
     
@@ -407,7 +418,8 @@ def app():
     st.markdown('## Trash bin map with collection tonnages by district')
     
     folium_static(m)
+    
     st.bar_chart(
-        df_bins.groupby('borough')['site_type'].count().sort_values
+        df_bins.groupby('borough')['site_type'].count().sort_values()
     )
     
