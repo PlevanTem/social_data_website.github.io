@@ -46,10 +46,7 @@ from IPython.display import display
 import warnings
 warnings.filterwarnings("ignore")
 
-'''
-!pip install geopandas
-!pip install folium matplotlib mapclassify
-'''
+#python -m pip install folium matplotlib mapclassify
 
 """# Collection
 [Discover how we care for all five boroughs with our reliable services.](https://www1.nyc.gov/assets/dsny/site/services)   
@@ -94,7 +91,7 @@ df_by_category = df_by_category[mask2]
 https://gis.stackexchange.com/questions/173835/point-in-polygon-geojson-using-shapely-python-returning-incorrect-results
 """
 
-fig0 = px.bar(df_by_category.iloc[:,1:].groupby('BOROUGH').count(),text_auto=True)
+fig0 = px.bar(df_by_category.iloc[:,1:].groupby('BOROUGH').count())
 fig0.update_layout(title_text='NYC average collection amount(T) by category from 2015 to 2021',
          legend_title="Collection Type",)
 fig0.show()
@@ -103,7 +100,7 @@ fig0.show()
 1. 
 """
 
-fig1 = px.bar(df_by_category.groupby('BOROUGH').mean(),text_auto=True)
+fig1 = px.bar(df_by_category.groupby('BOROUGH').mean())
 fig1.update_layout(title_text='NYC average collection amount(T) by category from 2015 to 2021',
          legend_title="Collection Type",)
 fig1.show()
@@ -382,7 +379,7 @@ def app():
     )
     
     st.markdown('## NYC collection types and majority of waste')
-    st.plotly_chart(fig1, use_container_width=True)
+    st.plotly_chart(fig1)
     st.markdown(
         """
         From the past 6 years collection history, we can see that [Staten Island](https://en.wikipedia.org/wiki/Staten_Island#Demographics) 
@@ -406,9 +403,9 @@ def app():
     )
     
     st.markdown('## Insights about New York City community districts - who\'s the largest and least disposal maker?')
-    st.plotly_chart(fig2, use_container_width=True)
+    st.plotly_chart(fig2)
     st.markdown('Community 412 is the largest recycled region, with around 8000T materials collected, while community 101 had the least disposer, with only about 1/4 of 412\'s collection.')
-    st.plotly_chart(fig3, use_container_width=True)
+    st.plotly_chart(fig3)
     st.markdown('From the map above, it\'s easier to compare the collection amount between 59 NYC communities and see the change by draging the slider.')
     
    
