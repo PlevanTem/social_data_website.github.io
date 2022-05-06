@@ -206,6 +206,6 @@ def app():
     st.bokeh_chart(tabs, use_container_width=True)
 
     st.header("Development of the water quality for the Sample Stations from 2015 - 2022")
-    #st.plotly_chart(fig_time)
+    st.plotly_chart(fig_time)
     folium_static(ny_map_heat)
     #st.plotly_chart(fig)
