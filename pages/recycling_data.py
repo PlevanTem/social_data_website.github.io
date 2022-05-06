@@ -46,15 +46,17 @@ from IPython.display import display
 import warnings
 warnings.filterwarnings("ignore")
 
+'''
 !pip install geopandas
 !pip install folium matplotlib mapclassify
+'''
 
 """# Collection
 [Discover how we care for all five boroughs with our reliable services.](https://www1.nyc.gov/assets/dsny/site/services)   
 [Dataset source](https://data.cityofnewyork.us/City-Government/DSNY-Monthly-Tonnage-Data/ebb7-mvp5)
 """
 
-df_monthly_collection_tonnage = pd.read_csv('DSNY_Monthly_Tonnage_Data.csv')
+df_monthly_collection_tonnage = pd.read_csv('data/DSNY_Monthly_Tonnage_Data.csv')
 
 df_monthly_collection_tonnage.shape
 
@@ -77,8 +79,6 @@ df_by_category = df_monthly_collection_tonnage[['DATE','BOROUGH','REFUSETONSCOLL
 df_monthly_collection_tonnage['TOTALCOLLECTED'] = df_monthly_collection_tonnage.iloc[:,3:-1].sum(1)
 df_monthly_collection_tonnage = df_monthly_collection_tonnage[['DATE','BOROUGH','COMMUNITYDISTRICT','BOROUGH_ID','TOTALCOLLECTED']]
 
-df_monthly_collection_tonnage.head()
-
 """### Drop missing values"""
 
 df_monthly_collection_tonnage[df_monthly_collection_tonnage.isna().T.any()]
@@ -94,19 +94,19 @@ df_by_category = df_by_category[mask2]
 https://gis.stackexchange.com/questions/173835/point-in-polygon-geojson-using-shapely-python-returning-incorrect-results
 """
 
-fig = px.bar(df_by_category.iloc[:,1:].groupby('BOROUGH').count(),text_auto=True)
-fig.update_layout(title_text='NYC average collection amount(T) by category from 2015 to 2021',
+fig0 = px.bar(df_by_category.iloc[:,1:].groupby('BOROUGH').count(),text_auto=True)
+fig0.update_layout(title_text='NYC average collection amount(T) by category from 2015 to 2021',
          legend_title="Collection Type",)
-fig.show()
+fig0.show()
 
 """**Findings:**   
 1. 
 """
 
-fig = px.bar(df_by_category.groupby('BOROUGH').mean(),text_auto=True)
-fig.update_layout(title_text='NYC average collection amount(T) by category from 2015 to 2021',
+fig1 = px.bar(df_by_category.groupby('BOROUGH').mean(),text_auto=True)
+fig1.update_layout(title_text='NYC average collection amount(T) by category from 2015 to 2021',
          legend_title="Collection Type",)
-fig.show()
+fig1.show()
 
 """**Findings**:   
 1. We can see that [Staten Island](https://en.wikipedia.org/wiki/Staten_Island#Demographics) is the largest collection producer region, while interestingly it has the least population among these 5 boroughs. By contrast, [Bronx](https://en.wikipedia.org/wiki/The_Bronx) has the least total collection and its GDP ranks the lowest among these 5 regions. 
@@ -251,15 +251,15 @@ collect_avg_by_cd = df.groupby(["BOROUGH",'BOR_CD']).mean().reset_index()
 collect_avg_by_cd['geometry'] = collect_avg_by_cd.apply(lambda x:Polygon(nycgeo[int(x.BOR_CD)]['coordinates'][0]),axis=1)
 collect_avg_by_cd.head()
 
-fig = px.bar(collect_avg_by_cd.sort_values(by='TOTALCOLLECTED',ascending=False),
+fig2 = px.bar(collect_avg_by_cd.sort_values(by='TOTALCOLLECTED',ascending=False),
             x="BOR_CD", y="TOTALCOLLECTED", \
             color='TOTALCOLLECTED', \
             color_continuous_scale=px.colors.sequential.deep,
             title='NYC Average Recycled Collection Amount of 59 Community Districts, from 1992-2021', height=600)
 
-fig.update_yaxes(title_text='Total Collected Resources(T)',ticksuffix="T") # customize y label tick
+fig2.update_yaxes(title_text='Total Collected Resources(T)',ticksuffix="T") # customize y label tick
 
-fig.show()
+fig2.show()
 
 """**Findings**:  
 Community 412 is the most recycled collection origin, with around 8000T materials collected, while community 101 had the least collection, with only about 1/4 of 412's collection.
@@ -272,7 +272,7 @@ df_by_year = df[df.DATE.apply(lambda x:x.month==1)].sort_values(by='DATE')
 import plotly.express as px
 figsize=(20, 10)
 
-fig = px.choropleth_mapbox(df_by_year,
+fig3 = px.choropleth_mapbox(df_by_year,
           geojson=nyc_cd_geojson, 
           locations=df_by_year.BOR_CD,
           featureidkey="properties.communityDistrict",
@@ -286,13 +286,13 @@ fig = px.choropleth_mapbox(df_by_year,
           title='NYC Recycled Collection Amount of 59 Community Districts, from 1992-2021',
           animation_frame="date_str")
               
-fig.update_geos(fitbounds="locations", visible=True)
-fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-fig.update_layout(
+fig3.update_geos(fitbounds="locations", visible=True)
+fig3.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+fig3.update_layout(
     title_text='The Average Amount of NYC Recycled Collection by Community District'
 )
 
-fig.show()
+fig3.show()
 
 """### folium/Geopandas
 https://geopandas.org/en/stable/gallery/polygon_plotting_with_folium.html
@@ -302,6 +302,7 @@ https://jingwen-z.github.io/how-to-draw-a-variety-of-maps-with-folium-in-python/
 """
 
 df_bins = pd.read_csv('https://data.cityofnewyork.us/resource/sxx4-xhzg.csv')
+df_bins.borough = df_bins.borough.apply(lambda x:'Brooklyn' if x=='Brooklyn ' else x)
 
 df_bins.head()
 
@@ -313,11 +314,11 @@ def boroughcolors(df):
     elif df['borough'] == 'Queens':
         return 'blue'
     elif df['borough'] == 'Manhattan':
-        return 'red'
+        return 'black'
     elif df['borough'] == 'Brooklyn':
         return 'red'
     else:
-        return 'darkblue'
+        return 'pink'
 
 df_bins["color"] = df_bins.apply(boroughcolors, axis=1)
 df_bins.head()
@@ -361,8 +362,57 @@ colormap.add_to(m)
 
 m
 
-
-
+df_bins.groupby('borough')['site_type'].count()\
+    .sort_values().plot(kind='bar',
+              title='No. of trash bins in 5 boroughs',
+              color=['green','pink','red','blue','black'])
 
 def app():
-    st.markdown('Something here')
+    st.markdown('# Zero Waste')
+    st.markdown('## Reducing Emissions from Our Waste Stream and Advancing a Circular Economy')
+    st.markdown('NYC works on reusing and recycling all kinds of materials, reducing truck traffic, and transitioning toward a circular economy')
+    st.markdown('Let\'s see what they did to sort, collect and recycle disposals!')
+    
+    st.markdown(
+        """
+        *What we focus on is collection tonnages from NYC residences and instructions at 5 NYC boroughs along with time and geographical information.**
+        - [source1](https://data.cityofnewyork.us/City-Government/DSNY-Monthly-Tonnage-Data/ebb7-mvp5)
+        - [source2](https://data.cityofnewyork.us/resource/sxx4-xhzg.csv)
+        """
+    )
+    
+    st.markdown('## NYC collection types and majority of waste')
+    st.plotly_chart(fig1, use_container_width=True)
+    st.markdown(
+        """
+        From the past 6 years collection history, we can see that [Staten Island](https://en.wikipedia.org/wiki/Staten_Island#Demographics) 
+        is the largest collection producer region, while interestingly it has the least population among these 5 boroughs. 
+        By contrast, [Bronx](https://en.wikipedia.org/wiki/The_Bronx) has the least total collection and its GDP ranks the lowest among these 5 regions. 
+        Secondly, the 5 boroughs had similar collection pattern. Trash or refuse is the No.1 type of collection, accounting for more than half of the total collection, following by paper usage and MGP products(recyclable metal, glass, plastic, and beverage cartons), while by contrast school organic and leave organic (materials that separated by residents before they are set out for collection) still collected very low compared to other collections.  
+        """
+    )
+    
+    st.markdown('## Collection comparison between 5 NYC boroughs, who performs better?')
+    st.bokeh_chart(tabs, use_container_width=True)
+    st.markdown(
+        '''
+        **Findings**:   
+            We can see that, overally, the amount of collection from different categories increased slowly from 2015 to 2022. 
+            Looking at the ups and downs of collection tonnages among the whole time range, waste and disposal collection service follows a seasonal pattern, indicating around
+            January collection service is less active, while in June they collect the most. In addition, there is a increase trend of recycling and collection amount in the past 7 years.            
+            Staten island was the largest recycler and collector which also showed a more dramatic change between the 7 collection categories than the other boroughs.
+            By comparison, Manhattan didn't change much in terms of all the 7 types of collection.
+        '''
+    )
+    
+    st.markdown('## Insights about New York City community districts - who\'s the largest and least disposal maker?')
+    st.plotly_chart(fig2, use_container_width=True)
+    st.markdown('Community 412 is the largest recycled region, with around 8000T materials collected, while community 101 had the least disposer, with only about 1/4 of 412\'s collection.')
+    st.plotly_chart(fig3, use_container_width=True)
+    st.markdown('From the map above, it\'s easier to compare the collection amount between 59 NYC communities and see the change by draging the slider.')
+    
+   
+    st.markdown('## Trash bin map with collection tonnages by district')
+    folium_static(m) 
+    st.bar_chart(df_bins.groupby('borough')['site_type'].count().sort_values())
+    
