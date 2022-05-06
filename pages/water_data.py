@@ -38,25 +38,25 @@ from streamlit_folium import folium_static
 
 df = pd.read_csv('data/Water_quality.csv')
 
+# get an overview of the Sample Sites in the 5 boroughs in NCY
+
 df_loc = df[['Sample Site', 'lat', 'lon', 'color', 'borough']]
 df_loc = df_loc.drop_duplicates().reset_index()
 
-ny_lat = 40.730610
-ny_lon = -73.935242
-ny_map = folium.Map(location=[ny_lat, ny_lon],
-                    zoom_start = 10)
-
+# Folium map of the Sample Site locations
+ny_map = folium.Map(location=[40.730610, -73.935242], zoom_start = 10)
 for index,row in df_loc.iterrows():
     pop = row['Sample Site']
     bor = row['borough']
     folium.CircleMarker([row['lat'], row['lon']], popup=f'Sample Site: {pop}, Borough: {bor}', color=row['color'],
             fill=True, opacity=0.5, radius = 2).add_to(ny_map)
 
-    
+# Plot the development of the water quality over time for each sample site
 df['Year - Month'] = df['Year'].astype('str') + "-" + df['Month'].astype('str')
-fig_time = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site", color="Water_quality", animation_frame='Year - Month', mapbox_style='carto-positron', category_orders={'Year - Month':list(np.sort(df['Year - Month'].unique()))}, zoom=8)
+fig_time = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site", color="Water_quality", opacity=0.5, animation_frame='Year - Month', 
+                             mapbox_style='carto-positron', color_continuous_scale = 'rdgy', category_orders={'Year - Month':list(np.sort(df['Year - Month'].unique()))}, zoom=8)
 fig_time.show()
-#fig_time = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site", color="Water_quality", mapbox_style='carto-positron', animation_frame='Year - Month', zoom=8)
+
 
 ### Folium Heatmap with Time for the bad water quality samples in NCY
 
