@@ -39,7 +39,7 @@ from bokeh.models.mappers import ColorMapper, LinearColorMapper
 from branca.colormap import linear
 from folium.plugins import TimeSliderChoropleth
 import folium
-
+from streamlit_folium import folium_static
 
 from datetime import datetime
 from IPython.display import display
@@ -405,6 +405,9 @@ def app():
     
    
     st.markdown('## Trash bin map with collection tonnages by district')
-    folium_static(m) 
-    st.bar_chart(df_bins.groupby('borough')['site_type'].count().sort_values())
+    
+    folium_static(m)
+    st.bar_chart(
+        df_bins.groupby('borough')['site_type'].count().sort_values
+    )
     
