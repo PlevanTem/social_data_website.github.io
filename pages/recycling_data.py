@@ -238,11 +238,6 @@ df['date_str'] = df['DATE'].apply(lambda x: str(x)) # create a str date column
 
 df.head()
 
-# save the processed file to local
-from google.colab import files
-df.to_csv('Total_collection_of_NYC_from_2015_to_2021.csv')
-files.download("Total_collection_of_NYC_from_2015_to_2021.csv")
-
 collect_avg_by_cd = df.groupby(["BOROUGH",'BOR_CD']).mean().reset_index()
 # match geometry polygon coordinates from nyc community district geojson
 collect_avg_by_cd['geometry'] = collect_avg_by_cd.apply(lambda x:Polygon(nycgeo[int(x.BOR_CD)]['coordinates'][0]),axis=1)
