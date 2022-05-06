@@ -54,7 +54,7 @@ for index,row in df_loc.iterrows():
 # Plot the development of the water quality over time for each sample site
 df['Year - Month'] = df['Year'].astype('str') + "-" + df['Month'].astype('str')
 fig_time = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site", color="Water_quality", opacity=0.5, animation_frame='Year - Month', 
-                             mapbox_style='carto-positron', color_continuous_scale = 'rdgy', category_orders={'Year - Month':list(np.sort(df['Year - Month'].unique()))}, zoom=8)
+                             mapbox_style='carto-positron', color_continuous_scale = ["red", "green"], category_orders={'Year - Month':list(np.sort(df['Year - Month'].unique()))}, zoom=8)
 fig_time.show()
 
 
