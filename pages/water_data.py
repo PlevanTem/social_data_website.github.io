@@ -130,11 +130,11 @@ for indx,i in enumerate(list_of_bars):
     bar3[i] = p3.vbar(x='borough',  top=i, source=cds_chlor, legend_label=i, fill_color=colors[indx], width=0.5) 
     items3.append((dict_legend[i], [bar3[i]]))
     bar4[i] = p4.vbar(x='borough',  top=i, source=cds_fluor, legend_label=i, fill_color=colors[indx], width=0.5)
-    items1.append((dict_legend[i], [bar4[i]]))
+    items4.append((dict_legend[i], [bar4[i]]))
     bar5[i] = p5.vbar(x='borough',  top=i, source=cds_coli, legend_label=i, fill_color=colors[indx], width=0.5) 
-    items2.append((dict_legend[i], [bar5[i]]))
+    items5.append((dict_legend[i], [bar5[i]]))
     bar6[i] = p6.vbar(x='borough',  top=i, source=cds_ecoli, legend_label=i, fill_color=colors[indx], width=0.5) 
-    items3.append((dict_legend[i], [bar6[i]]))
+    items6.append((dict_legend[i], [bar6[i]]))
     
 # customize the legend for the three plots
 customize_legend(p1, items1)
@@ -198,14 +198,20 @@ def app():
     st.markdown('* Coliform (Quanti-Tray) (MPN/100mL) - **0 MPN/100ml**')
     st.markdown('* E.coli(Quanti-Tray) (MPN/100mL) - **0 MPN/100ml** ')
     
-    st.markdown('These allowable limits were used to devide the levels for each indicator classifying the water as either good below the allowed limits from WHO (0) or bad being above the allowed limits (1)')
-    st.markdown('Also the overall indicator Water Quality was created that rates the overall water quality as good (1) if none of the indicators is above the allowed limits and bad if even one of does.')
-    st.markdown('Below you can explore the different indicators in the presented districts')
-    
+    st.markdown(
+        """
+        These allowable limits were used to devide the levels for each indicator classifying the water as either good below the allowed limits 
+        from WHO (0) or bad being above the allowed limits (1).Also the overall indicator Water Quality was created that rates the overall water 
+        quality as good (1) if none of the indicators is above the allowed limits and bad if even one of does. Below you can explore the 
+        different indicators in the presented 5 districts of NYC.
+        """
+    )
+
     st.markdown('### **Number of good and bad quality samples based on different indicators for each borough**')
     st.bokeh_chart(tabs, use_container_width=True)
 
     st.header("Development of the water quality for the Sample Stations from 2015 - 2022")
+    
     st.plotly_chart(fig_time)
     #folium_static(ny_map_heat)
     #st.plotly_chart(fig)
