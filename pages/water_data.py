@@ -175,10 +175,10 @@ p6.add_tools(HoverTool(tooltips=[('Fraction of good samples for district', '@fra
                     ('Fraction of good samples over all district', '@frac_all{0.0000}')], renderers=[bar6['count']]))
 
 
- def value_count(series):
-        return series.value_counts()[0]
+def value_count(series):
+      return series.value_counts()[0]
 
-    def time_group(time, time_name):
+def time_group(time, time_name):
     df_time = df.groupby(time).agg({'Water_quality':['count', value_count]}).reset_index()
     df_time_bor = df.groupby([time, 'borough']).agg({'Water_quality':['count', value_count]}).reset_index()
     df_time.columns = df_time.columns.droplevel()
@@ -189,13 +189,13 @@ p6.add_tools(HoverTool(tooltips=[('Fraction of good samples for district', '@fra
     df_time['frac_all'] = df_time['bad_count']/len(df[df['Water_quality']==0])
     df_time_bor['frac_bad'] = df_time_bor['bad_count']/df_time_bor['count']
     df_time_bor['frac_all'] = df_time_bor['bad_count']/len(df[df['Water_quality']==0])
-    return df_time, df_time_bor
+      return df_time, df_time_bor
 
 df_month, df_month_bor= time_group('Month', 'Month')
 
 import plotly.graph_objects as go
 
-plot = go.Figure(data=[go.Bar(
+plot_months = go.Figure(data=[go.Bar(
     name='All Boroughs',
     x=df_month['Month'],
     y=df_month['frac_bad']
@@ -227,7 +227,7 @@ plot = go.Figure(data=[go.Bar(
 ),  
 ])
 
-plot.update_layout(
+plot_months.update_layout(
     updatemenus=[
         dict(
             active=0,
@@ -266,7 +266,7 @@ plot.update_layout(
         )
     ])
   
-plot.show()
+plot_months.show()
 
 def app():
     st.markdown('### **What do we all need for living? - Air, Water and Love right?**')
@@ -310,4 +310,4 @@ def app():
     #st.plotly_chart(fig)
     
     st.header("Fraction of bad water quality sample of the months of the year")
-    st.plotly_chart(plot)
+    st.plotly_chart(plot_months)
