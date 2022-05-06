@@ -21,6 +21,9 @@ from bokeh.models import (
 from bokeh.models.mappers import ColorMapper, LinearColorMapper
 from bokeh.palettes import Viridis5
 import plotly.express as px
+import folium
+from folium.plugins import HeatMapWithTime
+from branca.element import Figure
 
 #%matplotlib inline
 
@@ -50,8 +53,22 @@ for index,row in df_loc.iterrows():
             fill=True, opacity=0.5, radius = 2).add_to(ny_map)
 
 #fig = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site", color="Water_quality", animation_frame='Year - Month', mapbox_style='carto-positron', category_orders={'Year - Month':list(np.sort(df_water['Year - Month'].unique()))}, zoom=8)
-
 fig = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site", color="Water_quality", mapbox_style='carto-positron', zoom=8)
+
+
+lat_long_list = []
+df_water_bad = df_water[df_water.Water_quality == 0]
+times = list(np.sort(df_water['Year - Month'].unique()))
+for time in times:
+    temp=[]
+    for index,  row in df_water_bad[df_water_bad['Year - Month'] == time].iterrows():
+        temp.append([row['lat'],row['lon']])
+    lat_long_list.append(temp)
+
+fig = folium.Figure(width=850,height=550)
+ny_map_heat=folium.Map(location=[40.70, -73.94],zoom_start=10)
+fig.add_child(ny_map_heat)
+HeatMapWithTime(lat_long_list,radius=5,auto_play=True,position='bottomright').add_to(ny_map_heat)
 
 def grouping(indicator):
     df_group = df.groupby('borough').agg({indicator:['sum','count']}).reset_index()
@@ -184,4 +201,5 @@ def app():
 
     st.header("Development of the water quality for the Sample Stations from 2015 - 2022")
     st.plotly_chart(fig)
+    folium_static(ny_map_heat)
     #st.plotly_chart(fig)
