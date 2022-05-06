@@ -52,10 +52,14 @@ for index,row in df_loc.iterrows():
     folium.CircleMarker([row['lat'], row['lon']], popup=f'Sample Site: {pop}, Borough: {bor}', color=row['color'],
             fill=True, opacity=0.5, radius = 2).add_to(ny_map)
 
-#fig_time = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site", color="Water_quality", animation_frame='Year - Month', mapbox_style='carto-positron', category_orders={'Year - Month':list(np.sort(df['Year - Month'].unique()))}, zoom=8)
+    
+df['Year - Month'] = df['Year'].astype('str') + "-" + df['Month'].astype('str')
+fig_time = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site", color="Water_quality", animation_frame='Year - Month', mapbox_style='carto-positron', category_orders={'Year - Month':list(np.sort(df['Year - Month'].unique()))}, zoom=8)
+fig_time.show()
 #fig_time = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site", color="Water_quality", mapbox_style='carto-positron', animation_frame='Year - Month', zoom=8)
 
-df['Year - Month'] = df['Year'].astype('str') + "-" + df['Month'].astype('str')
+### Folium Heatmap with Time for the bad water quality samples in NCY
+
 lat_long_list = []
 df_water_bad = df[df.Water_quality == 0]
 times = list(np.sort(df['Year - Month'].unique()))
@@ -64,11 +68,13 @@ for time in times:
     for index,  row in df_water_bad[df_water_bad['Year - Month'] == time].iterrows():
         temp.append([row['lat'],row['lon']])
     lat_long_list.append(temp)
-
+    
 fig = folium.Figure(width=850,height=550)
 ny_map_heat=folium.Map(location=[40.70, -73.94],zoom_start=10)
 fig.add_child(ny_map_heat)
 HeatMapWithTime(lat_long_list,radius=5,auto_play=True,position='bottomright').add_to(ny_map_heat)
+
+### Bokeh plot of the different indicators per borough
 
 def grouping(indicator):
     df_group = df.groupby('borough').agg({indicator:['sum','count']}).reset_index()
