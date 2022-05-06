@@ -57,8 +57,8 @@ fig = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site", col
 
 
 lat_long_list = []
-df_water_bad = df_water[df_water.Water_quality == 0]
-times = list(np.sort(df_water['Year - Month'].unique()))
+df_water_bad = df[df.Water_quality == 0]
+times = list(np.sort(df['Year - Month'].unique()))
 for time in times:
     temp=[]
     for index,  row in df_water_bad[df_water_bad['Year - Month'] == time].iterrows():
