@@ -55,7 +55,7 @@ for index,row in df_loc.iterrows():
 #fig = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site", color="Water_quality", animation_frame='Year - Month', mapbox_style='carto-positron', category_orders={'Year - Month':list(np.sort(df_water['Year - Month'].unique()))}, zoom=8)
 fig = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site", color="Water_quality", mapbox_style='carto-positron', zoom=8)
 
-
+df['Year - Month'] = df['Year'].astype('str') + "-" + df['Month'].astype('str')
 lat_long_list = []
 df_water_bad = df[df.Water_quality == 0]
 times = list(np.sort(df['Year - Month'].unique()))
