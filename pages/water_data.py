@@ -310,4 +310,4 @@ def app():
     #st.plotly_chart(fig)
     
     st.header("Fraction of bad water quality sample of the months of the year")
-    st.plotly_chart(plot_months)
+    #st.plotly_chart(plot_months)
