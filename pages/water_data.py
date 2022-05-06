@@ -52,7 +52,7 @@ for index,row in df_loc.iterrows():
     folium.CircleMarker([row['lat'], row['lon']], popup=f'Sample Site: {pop}, Borough: {bor}', color=row['color'],
             fill=True, opacity=0.5, radius = 2).add_to(ny_map)
 
-fig_time = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site", color="Water_quality", animation_frame='Year - Month', mapbox_style='carto-positron', category_orders={'Year - Month':list(np.sort(df['Year - Month'].unique()))}, zoom=8)
+#fig_time = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site", color="Water_quality", animation_frame='Year - Month', mapbox_style='carto-positron', category_orders={'Year - Month':list(np.sort(df['Year - Month'].unique()))}, zoom=8)
 #fig_time = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site", color="Water_quality", mapbox_style='carto-positron', animation_frame='Year - Month', zoom=8)
 
 df['Year - Month'] = df['Year'].astype('str') + "-" + df['Month'].astype('str')
@@ -200,6 +200,6 @@ def app():
     st.bokeh_chart(tabs, use_container_width=True)
 
     st.header("Development of the water quality for the Sample Stations from 2015 - 2022")
-    st.plotly_chart(fig_time)
+    #st.plotly_chart(fig_time)
     folium_static(ny_map_heat)
     #st.plotly_chart(fig)
