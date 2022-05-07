@@ -158,7 +158,22 @@ fig_time = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site"
 fig_time.show()
 
 ### Investigation of the peak frames of the plot above
+#Data Set
+countries=['India', 'Australia',
+           'Japan', 'America',
+           'Russia']
+ 
+values = [4500, 2500, 1053, 500,
+          3200]
 
+#The plot
+fig3 = go.Figure(
+    go.Pie(
+    labels = countries,
+    values = values,
+    hoverinfo = "label+percent",
+    textinfo = "value"
+))
 ### Folium Heatmap with Time for the bad water quality samples in NCY
 
 lat_long_list = []
@@ -362,7 +377,7 @@ def app():
 
     st.header("But what about the times with a significant amount of insufficient water qualities in the samples?")
     
-    #st.plotly_chart(fig3)
+    st.plotly_chart(fig3)
     
     st.markdown('### **Number of good and bad quality samples based on different indicators for each borough**')
     
