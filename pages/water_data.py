@@ -541,4 +541,4 @@ def app():
         hinder the effectiveness of water disinfection, it is important to take measures if consistent higher levels of turbidity are observed.
         """
     )
-    st.pyplot(fig_year)
+    #st.pyplot(fig_year)
