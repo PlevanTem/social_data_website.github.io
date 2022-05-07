@@ -395,11 +395,6 @@ plt.ylabel('Fraction of water samples with insufficient quality', fontsize=14)
 plt.legend()
 
 # Overall trend over the years
-df_year, df_year_bor = time_group('Year', 'Year')
-fig_year = plt.bar(df_year['Year'], df_year['frac_bad'])
-plt.title('No of bad water samples for all NYC boroughs across the years 2015 - 2022', fontsize=14)
-plt.xlabel('Year', fontsize=14)
-plt.ylabel('Fraction of water samples with insufficient quality', fontsize=14)
 
 
 def app():
@@ -543,4 +538,4 @@ def app():
         """
     )
     
-    st.pyplot(fig_year)
+    #st.pyplot(fig_year)
