@@ -177,31 +177,50 @@ p6.add_tools(HoverTool(tooltips=[('Fraction of good samples for district', '@fra
 
 def app():
     st.markdown('### **What do we all need for living? - Air, Water and Love right?**')
-    st.markdown('Being able to drink water safely is a basic human right and the Sustainability Development Goal 6: Clean Water and Sanitation')
-    st.markdown('This is why one of the main goals of our analysis is to investigate the water quality in NYC by analyzing data from the Water sampling stations in New York.')
+    st.markdown(
+      """
+      Being able to drink water safely is a basic human right and the [Sustainability Development Goal 6: Clean Water and Sanitation](https://sdgs.un.org/goals/goal6).
+      From 2000 until 2020, the number of humans with access to drinking water that is managed safely so safe and healthy to drink, increased by 2 billion, however there
+      were still 2 billion people worldwide lacking safely managed drinking water services. From a developed countries such as the United States, you would expect that 
+      the water quality is great and drinking water is safe. But is it really?
+      
+      Answering this question is one of the main goals of our analysis and therefore we will investigate the water quality from Water sampling stations in New York City!
+      """
+    )
       
     st.markdown('### **But how can you image these Water sampling stations in NYC and how do they work?**')
  
     st.video('https://www.youtube.com/watch?v=6YIZCVkfY5M')
       
-    st.markdown('### **If you have been or live in NYC, you have probably seen them before! And now you know what they are for!**')
-    st.markdown('They are spread all over the city to check the water quality in every part of the city and every of the five boroughs')
-    st.markdown('Below you can explore the exact locations of the sample stations and maybe find to the nearest to where you are living or staying to check it out the next time you walk by!')
-
+    st.markdown(
+      """
+      **If you have been or live in NYC, you have probably seen them before! And now you know what they are for!**
+      They are spread all over the city to check the water quality in every part of the city and every of the five boroughs
+      Below you can explore the exact locations of the sample stations and maybe find to the nearest to where you are living or staying to check it out the next time you walk by!
+      """
+    )
+    
     folium_static(ny_map)
     
-    st.markdown('### **Now you have seen how the samples are taken and where the stations are - but what exactly is measured?**')
-    st.markdown('There are the following 5 main indicators that are measured and their allowable level in drinking water according to the WHO')
-    st.markdown('* Residual Free Chlorine (mg/L) - **5mg/L**')
-    st.markdown('* Turbidity (NTU) - **1 NTU**')
-    st.markdown('* Fluoride (mg/L) - **4 mg/L**')
-    st.markdown('* Coliform (Quanti-Tray) (MPN/100mL) - **0 MPN/100ml**')
-    st.markdown('* E.coli(Quanti-Tray) (MPN/100mL) - **0 MPN/100ml** ')
+    st.markdown('### **Now you have seen how the samples are taken and that the samples are collected manually - Are they really collected regularly?**')
+    
+    
+    st.markdown('### **So we can see that sampels are regularly collected even though it is a manual process  - but what exactly is measured in these samples?**')
+    st.markdown(
+      """
+      There are the following 5 main indicators that are measured and their allowable level in drinking water. You can follow the links to read more about the healthy limits in drinking water
+      * Residual Free Chlorine (mg/L) - **[4mg/L](https://www.cdc.gov/healthywater/drinking/public/water_disinfection.html#:~:text=What%20are%20safe%20levels%20of,effects%20are%20unlikely%20to%2occur)**
+      * Turbidity (NTU) - **[1 NTU](https://apps.who.int/iris/bitstream/handle/10665/254631/WHO-FWC-WSH-17.01-eng.pdf)**
+      * Fluoride (mg/L) - **[4 mg/L]( https://www.epa.gov/sites/default/files/2015-10/documents/2011_fluoride_questionsanswers.pdf)**
+      * Coliform (Quanti-Tray) (MPN/100mL) - **[0 MPN/100ml](https://www2.gnb.ca/content/dam/gnb/Departments/h-s/pdf/en/HealthyEnvironments/water/Coliforme.pdf)**
+      * E.coli(Quanti-Tray) (MPN/100mL) - **[0 MPN/100ml](https://www2.gnb.ca/content/dam/gnb/Departments/h-s/pdf/en/HealthyEnvironments/water/Coliforme.pdf)**
+      """
+    )
     
     st.markdown(
         """
-        These allowable limits were used to devide the levels for each indicator classifying the water as either good below the allowed limits 
-        from WHO (0) or bad being above the allowed limits (1).Also the overall indicator Water Quality was created that rates the overall water 
+        These allowable limits were used to devide the levels for each indicator classifying the water as either good below the allowed limits (0) 
+        or bad being above the allowed limits (1). Also the overall indicator Water Quality was created that rates the overall water 
         quality as good (1) if none of the indicators is above the allowed limits and bad if even one of does. Below you can explore the 
         different indicators in the presented 5 districts of NYC.
         """
