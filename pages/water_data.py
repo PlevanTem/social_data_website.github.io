@@ -541,9 +541,4 @@ def app():
         hinder the effectiveness of water disinfection, it is important to take measures if consistent higher levels of turbidity are observed.
         """
     )
-    
-    fig_year = plt.bar(df_year['Year'], df_year['frac_bad'])
-    plt.title('No of bad water samples for all NYC boroughs across the years 2015 - 2022', fontsize=14)
-    plt.xlabel('Year', fontsize=14)
-    plt.ylabel('Fraction of water samples with insufficient quality', fontsize=14)
     st.pyplot(fig_year)
