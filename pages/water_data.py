@@ -109,7 +109,7 @@ for indx,i in enumerate(list_of_bars):
     bar11[i] = p11.vbar(x='Year - Month',  top=i, source=cds_month_year, legend_label=i, fill_color=colors[indx], width=0.5)
     items11.append((dict_legend[i], [bar11[i]]))
     bar22[i] = p22.vbar(x='Day',  top=i, source=cds_day, legend_label=i, fill_color=colors[indx], width=0.5) 
-    items2.append((dict_legend[i], [bar22[i]]))
+    items22.append((dict_legend[i], [bar22[i]]))
     bar33[i] = p33.vbar(x='Month',  top=i, source=cds_month, legend_label=i, fill_color=colors[indx], width=0.5) 
     items33.append((dict_legend[i], [bar33[i]]))
     bar44[i] = p44.vbar(x='Year',  top=i, source=cds_year, legend_label=i, fill_color=colors[indx], width=0.5) 
