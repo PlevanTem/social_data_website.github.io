@@ -511,8 +511,36 @@ def app():
     )
     st.bokeh_chart(tabs, use_container_width=True)
     
-    st.header('Turbidity')
+    st.header('Influence of Turbidity on the Water quality')
+    st.markdown(
+        """
+        First of all, what exactly is turbidity?
+        >> Turbidity is a measure of cloudiness of the water. Turbidity is monitored because it is a good indicator of water quality, 
+        because high turbidity can hinder the effectiveness of disinfection, and because it is a good indicator of the effectiveness 
+        of our filtration system. - [NYC Environmental Protection](https://www1.nyc.gov/assets/dep/downloads/pdf/water/drinking-water/drinking-water-supply-quality-report/2019-drinking-water-supply-quality-report.pdf)
+        
+        Factors that influence turbidity are the following and you can read more about it [here](https://www.tnrd.ca/services/water-sewage/chlorination-and-turbidity/)
+        * storms
+        * high rainfall
+        * snow melt
+        
+       So a clear explanation for the high turbidity levels in March is the spring runoff of the snow after winter. 
+        """
+    )
+    
     st.pyplot(fig_turb)
     
     st.header('Overall development of Water quality in NYC from 2015 - 2022')
+    st.markdown
+        """
+        **So are the exceedings of turbidity levels concerning? No, for a turbidity level between 1 and 5, the threats to the public's health are modest.**
+        
+        Overall, there has been a positive development in water quality since 2015 and with the continous monitoring and NYC commitment to the 
+        [SDGs](https://www1.nyc.gov/site/international/programs/global-vision-urban-action.page) this trend should continue. Especially because the 
+        climate change leads to higher turbidity levels due to more and more intense rains, stronger storms or higher river levels according to the 
+        [United States Environmental Protection Agency](https://www.epa.gov/arc-x/climate-adaptation-and-erosion-sedimentation) and because turbidity can
+        hinder the effectiveness of water disinfection, it is important to take measures if consistent higher levels of turbidity are observed.
+        """
+    )
+    
     st.pyplot(fig_year)
