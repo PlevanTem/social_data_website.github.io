@@ -23,7 +23,6 @@ from bokeh.palettes import Viridis5
 import plotly.express as px
 import folium
 from folium.plugins import HeatMapWithTime
-from branca.element import Figure
 import plotly.graph_objects as go
 
 #%matplotlib inline
@@ -159,44 +158,19 @@ fig_time = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site"
 fig_time.show()
 
 ### Investigation of the peak frames of the plot above
-x = ['A', 'B', 'C', 'D']
+#Data Set
+countries=['India', 'Australia', 'Japan', 'America', 'Russia']
+ 
+values = [4500, 2500, 1053, 500, 3200]
 
-plot1 = go.Figure(data=[go.Bar(
-    name='Data 1',
-    x=x,
-    y=[100, 200, 500, 673]
-),
-    go.Bar(
-    name='Data 2',
-    x=x,
-    y=[56, 123, 982, 213]
-)
-])
-
-plot1.update_layout(
-    updatemenus=[
-        dict(
-            active=0,
-            buttons=list([
-                dict(label="Both",
-                     method="update",
-                     args=[{"visible": [True, True]},
-                           {"title": "Both"}]),
-                dict(label="Data 1",
-                     method="update",
-                     args=[{"visible": [True, False]},
-                           {"title": "Data 1",
-                            }]),
-                dict(label="Data 2",
-                     method="update",
-                     args=[{"visible": [False, True]},
-                           {"title": "Data 2",
-                            }]),
-            ]),
-        )
-    ])
-  
-plot1.show()
+#The plot
+fig3 = go.Figure(
+    go.Pie(
+    labels = countries,
+    values = values,
+    hoverinfo = "label+percent",
+    textinfo = "value"
+))
 
 ### Folium Heatmap with Time for the bad water quality samples in NCY
 
@@ -402,7 +376,7 @@ def app():
 
     st.header("But what about the times with a significant amount of insufficient water qualities in the samples?")
     
-    st.plotly_chart(plot1)
+    st.plotly_chart(fig3)
     
     st.markdown('### **Number of good and bad quality samples based on different indicators for each borough**')
     
