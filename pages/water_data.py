@@ -251,7 +251,8 @@ plot_month.update_layout(
 plot_month.update_layout(
     title = "Fraction of water samples with insufficient water quality per month for all boroughs",
     xaxis_title="Month",
-    yaxis_title="Fraction of water samples with insufficient quality",
+    yaxis_title="Fraction of bad quality water samples",
+    legend_title="Boroughs",
 )
   
 plot_month.show()
@@ -291,7 +292,7 @@ df_ecoli, cds_ecoli = grouping('Ecoli_level')
 df_water, cds_water = grouping('Water_quality')
 
 list_of_bars = ['count', 'sum']
-colors = ['red', 'green']
+colors = ['#FF0000', '#0000FF']
 dict_legend = {'count':'No of all samples', 'sum':'No of good samples'}
 
 # Create a general function for customizing legends
@@ -302,9 +303,9 @@ def customize_legend(p, items):
     p.legend.click_policy = "mute"
 
 # Create the general layout of the 3 plots with width, height, title and axes labels
-p1 = figure(plot_width = 950, plot_height = 500,title="Number of samples by district for water quality", 
+p2 = figure(plot_width = 950, plot_height = 500,title="Number of samples by district for water quality", 
             x_axis_label='District', y_axis_label='Number of samples in the data', x_range=df_water.borough.values)
-p2 = figure(plot_width = 950, plot_height = 500,title="Number of samples by district for turbidity level", 
+p1 = figure(plot_width = 950, plot_height = 500,title="Number of samples by district for turbidity level", 
             x_axis_label='District', y_axis_label='Number of samples in the data', x_range=df_turb.borough.values)
 p3 = figure(plot_width = 950, plot_height = 500,title="Number of samples by district for chlorine level", 
             x_axis_label='District', y_axis_label='Number of samples in the data', x_range=df_chlor.borough.values)
@@ -321,10 +322,10 @@ items1, items2, items3, items4, items5, items6 = [], [], [], [], [], []
 
 # create the bars for the three plots
 for indx,i in enumerate(list_of_bars):
-    bar1[i] = p1.vbar(x='borough',  top=i, source=cds_water, legend_label=i, fill_color=colors[indx], width=0.5)
-    items1.append((dict_legend[i], [bar1[i]]))
-    bar2[i] = p2.vbar(x='borough',  top=i, source=cds_turb, legend_label=i, fill_color=colors[indx], width=0.5) 
+    bar2[i] = p2.vbar(x='borough',  top=i, source=cds_water, legend_label=i, fill_color=colors[indx], width=0.5)
     items2.append((dict_legend[i], [bar2[i]]))
+    bar1[i] = p1.vbar(x='borough',  top=i, source=cds_turb, legend_label=i, fill_color=colors[indx], width=0.5) 
+    items1.append((dict_legend[i], [bar1[i]]))
     bar3[i] = p3.vbar(x='borough',  top=i, source=cds_chlor, legend_label=i, fill_color=colors[indx], width=0.5) 
     items3.append((dict_legend[i], [bar3[i]]))
     bar4[i] = p4.vbar(x='borough',  top=i, source=cds_fluor, legend_label=i, fill_color=colors[indx], width=0.5)
@@ -349,8 +350,8 @@ l3 = layout([[p3]])
 l4 = layout([[p4]])
 l5 = layout([[p5]])
 l6 = layout([[p6]])
-tab1 = Panel(child=l1,title="Water quality")
-tab2 = Panel(child=l2,title="Turbidity level")
+tab2 = Panel(child=l2,title="Water quality")
+tab1 = Panel(child=l1,title="Turbidity level")
 tab3 = Panel(child=l3,title="Chlorine level")
 tab4 = Panel(child=l4,title="Fluoride level")
 tab5 = Panel(child=l5,title="Coliform level")
@@ -371,6 +372,28 @@ p5.add_tools(HoverTool(tooltips=[('Fraction of good samples for district', '@fra
                     ('Fraction of good samples over all district', '@frac_all{0.0000}')], renderers=[bar5['count']]))
 p6.add_tools(HoverTool(tooltips=[('Fraction of good samples for district', '@frac_good{0.0000}'),
                     ('Fraction of good samples over all district', '@frac_all{0.0000}')], renderers=[bar6['count']]))
+
+# Turbidity influence on water quality
+
+def time_ind_group(time, time_name, indicator):
+    df_time = df.groupby(time).agg({indicator:['count', value_count]}).reset_index()
+    df_time.columns = df_time.columns.droplevel()
+    df_time.columns = [time_name, 'count', 'bad_count']
+    df_time['frac_bad'] = df_time['bad_count']/df_time['count']
+    df_time['frac_all'] = df_time['bad_count']/len(df[df[indicator]==0])
+    return df_time
+  
+df_wq = time_ind_group('Month', 'Month', 'Water_quality')
+df_tb = time_ind_group('Month', 'Month', 'Turbidity_level')
+
+fig_turb = plt.figure(figsize=(15,7))
+plt.bar(df_wq['Month'], df_wq['frac_bad'], color='blue', label='Water quality')
+plt.bar(df_tb['Month'], df_tb['frac_bad'], color='orange', label='Turbidity level', alpha=0.5)
+plt.title('Influence of turbidity on the overall water quality')
+plt.xlabel('Month')
+plt.ylabel('Fraction of water samples with insufficient quality')
+plt.legend()
+
 
 
 def app():
@@ -458,15 +481,33 @@ def app():
     st.plotly_chart(fig_time)
 
     st.header("But what about the times with a significant amount of insufficient water qualities in the samples?")
-    
+    st.markdown(
+        """
+        If you follow the time development in the figure above closely, you can notice that there seem to be a lot of water samples with insufficient water quality
+        at the beginning of the year. To get a clearer view on this, see the visualization below of the fraction of samples with bad water quality below. 
+        The fraction of the samples was taken here to take into account that there was fewer samples taken in November for example as discover before.
+        
+        The plot clearly shows that the insufficient water quality rises from the beginning of the year until it peaks in March. After that the water quality
+        drastically improves until the end of the year. This development can be observed in all five boroughs so it is a phenomena across New York City.
+        But what influences the measure of the water quality the most and so what is the explanation behind this development?
+        """
+    )
     st.plotly_chart(plot_month)
     
-    st.markdown('### **Number of good and bad quality samples based on different indicators for each borough**')
-    
+    st.markdown('### **What indicator influences the water quality most and contributes to an overall insufficient water quality?**')
+    st.markdown(
+        """
+        In the plot below you can investigate the fraction of samples in and above the allowable limits for every indicator and the overall water quality. 
+        
+        What you can easily see after taking a look at the indicators is that the turbidity levels that are above the allowable limits in orange influence 
+        the water quality the most in each district. All of the other indicators are mostly within the allowable limits. 
+        """
+    )
     st.bokeh_chart(tabs, use_container_width=True)
+    
+    st.header('Turbidity')
+    st.pyplot(fig_turb)
     
     #folium_static(ny_map_heat)
     #st.plotly_chart(fig)
     
-    st.header("Fraction of bad water quality sample of the months of the year")
-    #st.plotly_chart(plot_months)
