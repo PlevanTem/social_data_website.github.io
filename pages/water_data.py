@@ -24,6 +24,7 @@ import plotly.express as px
 import folium
 from folium.plugins import HeatMapWithTime
 from branca.element import Figure
+import plotly.graph_objects as go
 
 #%matplotlib inline
 
@@ -157,6 +158,45 @@ fig_time = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site"
                              mapbox_style='carto-positron', color_continuous_scale = ['#FF0000', '#0000FF'], category_orders={'Year - Month':sorted_year_month}, zoom=8)
 fig_time.show()
 
+### Investigation of the peak frames of the plot above
+x = ['A', 'B', 'C', 'D']
+
+plot1 = go.Figure(data=[go.Bar(
+    name='Data 1',
+    x=x,
+    y=[100, 200, 500, 673]
+),
+    go.Bar(
+    name='Data 2',
+    x=x,
+    y=[56, 123, 982, 213]
+)
+])
+
+plot1.update_layout(
+    updatemenus=[
+        dict(
+            active=0,
+            buttons=list([
+                dict(label="Both",
+                     method="update",
+                     args=[{"visible": [True, True]},
+                           {"title": "Both"}]),
+                dict(label="Data 1",
+                     method="update",
+                     args=[{"visible": [True, False]},
+                           {"title": "Data 1",
+                            }]),
+                dict(label="Data 2",
+                     method="update",
+                     args=[{"visible": [False, True]},
+                           {"title": "Data 2",
+                            }]),
+            ]),
+        )
+    ])
+  
+plot1.show()
 
 ### Folium Heatmap with Time for the bad water quality samples in NCY
 
@@ -343,14 +383,31 @@ def app():
         different indicators in the presented 5 districts of NYC.
         """
     )
+    
+     st.header("Development of the water quality for the Sample Stations from 2015 - 2022")
+     st.markdown(
+        """
+        Below you can see the development of the water quality for each sample station from 2015 - 2022 with insufficient water quality with one of the indicators 
+        being above the allowable limits indicated in red and all indicators being within the presented limits in blue. You might ask yourself here, why not 
+        red and green to show the "bad" and "good" samples? These colors might not be distinct enough for people with color blindness so we chose colors with the 
+        help of a [Color blindness similator](https://www.color-blindness.com/coblis-color-blindness-simulator/) that are also colorblind friendly so that the 
+        distinction can be made by everyone!
+        
+        Overall, it can be seen that there is a positive development of more and more water samples with indicators in the allowable limits over the years and
+        most of the samples indicate a sufficient quality of drinking water in NYC.
+        """
+    )
+    
+    st.plotly_chart(fig_time)
 
+    st.header("But what about the times with a significant amount of insufficient water qualities in the samples?")
+    
+    st.plotly_chart(plot1)
+    
     st.markdown('### **Number of good and bad quality samples based on different indicators for each borough**')
     
     st.bokeh_chart(tabs, use_container_width=True)
-
-    st.header("Development of the water quality for the Sample Stations from 2015 - 2022")
     
-    st.plotly_chart(fig_time)
     #folium_static(ny_map_heat)
     #st.plotly_chart(fig)
     
