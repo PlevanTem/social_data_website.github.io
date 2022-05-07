@@ -389,11 +389,17 @@ df_tb = time_ind_group('Month', 'Month', 'Turbidity_level')
 fig_turb = plt.figure(figsize=(15,7))
 plt.bar(df_wq['Month'], df_wq['frac_bad'], color='blue', label='Water quality')
 plt.bar(df_tb['Month'], df_tb['frac_bad'], color='orange', label='Turbidity level', alpha=0.5)
-plt.title('Influence of turbidity on the overall water quality')
-plt.xlabel('Month')
-plt.ylabel('Fraction of water samples with insufficient quality')
+plt.title('Influence of turbidity on the overall water quality', fontsize=14)
+plt.xlabel('Month', fontsize=1)
+plt.ylabel('Fraction of water samples with insufficient quality', fontsize=14)
 plt.legend()
 
+# Overall trend over the years
+df_year, df_year_bor = time_group('Year', 'Year')
+fig_year = plt.bar(df_year['Year'], df_year['frac_bad'])
+plt.title('No of bad water samples for all NYC boroughs across the years 2015 - 2022', fontsize=14)
+plt.xlabel('Year', fontsize=14)
+plt.ylabel('Fraction of water samples with insufficient quality', fontsize=14)
 
 
 def app():
@@ -508,6 +514,5 @@ def app():
     st.header('Turbidity')
     st.pyplot(fig_turb)
     
-    #folium_static(ny_map_heat)
-    #st.plotly_chart(fig)
-    
+    st.header('Overall development of Water quality in NYC from 2015 - 2022')
+    st.pyplot(fig_year)
