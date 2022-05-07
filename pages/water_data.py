@@ -247,6 +247,12 @@ plot_month.update_layout(
             ]),
         )
     ])
+
+plot_month.update_layout(
+    title = "Fraction of water samples with insufficient water quality per month for all boroughs",
+    xaxis_title="Month",
+    yaxis_title="Fraction of water samples with insufficient quality",
+)
   
 plot_month.show()
   
