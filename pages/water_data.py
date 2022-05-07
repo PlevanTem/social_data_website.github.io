@@ -531,7 +531,7 @@ def app():
     st.pyplot(fig_turb)
     
     st.header('Overall development of Water quality in NYC from 2015 - 2022')
-    st.markdown
+    st.markdown(
         """
         **So are the exceedings of turbidity levels concerning? No, for a turbidity level between 1 and 5, the threats to the public's health are modest.**
         
