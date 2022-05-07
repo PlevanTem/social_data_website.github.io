@@ -79,7 +79,7 @@ cds_month = ColumnDataSource(df_no_samples_month)
 cds_year = ColumnDataSource(df_no_samples_year)
 
 list_of_bars = ['Sample Number']
-colors = ['blue']
+colors = ['#0000FF']
 dict_legend = {'Sample Number':'No of samples'}
 
 # Create a general function for customizing legends
@@ -136,12 +136,25 @@ tab44 = Panel(child=l44,title="Samples per Year")
 tabs_all = Tabs(tabs=[tab11, tab22, tab33, tab44])
 curdoc().add_root(tabs_all)
 
+p22.add_tools(HoverTool(tooltips=[('Finding', 'Looks like the number of samples collected at each day of the month \
+                                    is distributed equally, great! But there is a lot less samples on the  31st of the \
+                                    month. Why? Just because only about every second month has a 31st so no wonder there \
+                                    are less samples taken')]))
+
+p33.add_tools(HoverTool(tooltips=[('Findings', 'Looks like the number of samples collected at each month of the year \
+                                    is distributed equally, great! Only November has a smaller number of samples taken \
+                                    but that is the influence of the missing November 2021')]))
+
+p44.add_tools(HoverTool(tooltips=[('Findings', 'Looks like the number of samples collected at each year is around 15000 \
+                                    for all years, great ! Only 2022 has a significant smaller amount of samples which is \
+                                    because we are still in 2022')]))
+
 #display plot
 show(tabs_all)
 
 ### Plot the development of the water quality over time for each sample site
 fig_time = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site", color="Water_quality", opacity=0.5, animation_frame='Year - Month', 
-                             mapbox_style='carto-positron', color_continuous_scale = ["red", "green"], category_orders={'Year - Month':sorted_year_month}, zoom=8)
+                             mapbox_style='carto-positron', color_continuous_scale = ['#FF0000', '#0000FF'], category_orders={'Year - Month':sorted_year_month}, zoom=8)
 fig_time.show()
 
 
@@ -291,7 +304,23 @@ def app():
     folium_static(ny_map)
     
     st.markdown('### **Now you have seen how the samples are taken and that the samples are collected manually - Are they really collected regularly?**')
-    
+    st.markdown(
+      """
+      Below you can explore the water sample collection for different time frames to see if the manual collection is taking place consistently throughout the 
+      months of the timeframe, days of the month, months of the year and for the years 2015 - 2022. 
+      
+      Overall, you can see that the manual data collection is taking place regularly. So, it'S convincing to see that the water quality is monitored and controlled 
+      consistently to ensure New York City's population access to clean drinking water and health. There is a slight trend of more water samples being collected 
+      in the summer months and a little less samples in the winter months. As can be seen from the video the samples are collected from stations on the streets 
+      outside so the weather could be an explanation for these fluctuations but they are only small and in most months between 1200 and 1400 samples are collected.
+      
+      However there is a big gap in November 2021. Even though the NYC Department employee in the video stated that they are out every day of the year collecting
+      samples even after a hurricane, that might not be always be the case. There was a series of storms and hurricane warnings in 
+      [NYC in November 2021](https://www.nytimes.com/2021/11/13/nyregion/tornado-storm-long-island-nyc.html) which could explain the lack of sample collection in that month.
+      This example highlights the weaknesses of the manual water sampling collection and in the long-term the consistent water quality monitoring needs to be ensured. 
+      """
+    )
+
     st.bokeh_chart(tabs_all, use_container_width=True)
     
     st.markdown('### **So we can see that sampels are regularly collected even though it is a manual process  - but what exactly is measured in these samples?**')
@@ -316,6 +345,7 @@ def app():
     )
 
     st.markdown('### **Number of good and bad quality samples based on different indicators for each borough**')
+    
     st.bokeh_chart(tabs, use_container_width=True)
 
     st.header("Development of the water quality for the Sample Stations from 2015 - 2022")
