@@ -388,14 +388,14 @@ df_tb = time_ind_group('Month', 'Month', 'Turbidity_level')
 
 fig_turb = plt.figure(figsize=(15,7))
 plt.bar(df_wq['Month'], df_wq['frac_bad'], color='blue', label='Water quality')
-plt.bar(df_tb['Month'], df_tb['frac_bad'], color='orange', label='Turbidity level', alpha=0.5)
+plt.bar(df_tb['Month'], df_tb['frac_bad'], color='orange', label='Turbidity level')
 plt.title('Influence of turbidity on the overall water quality', fontsize=14)
 plt.xlabel('Month', fontsize=1)
 plt.ylabel('Fraction of water samples with insufficient quality', fontsize=14)
 plt.legend()
 
 # Overall trend over the years
-
+df_year, df_year_bor = time_group('Year', 'Year')
 
 def app():
     st.markdown('### **What do we all need for living? - Air, Water and Love right?**')
@@ -538,4 +538,8 @@ def app():
         """
     )
     
-    #st.pyplot(fig_year)
+    fig_year = plt.bar(df_year['Year'], df_year['frac_bad'])
+    plt.title('No of bad water samples for all NYC boroughs across the years 2015 - 2022', fontsize=14)
+    plt.xlabel('Year', fontsize=14)
+    plt.ylabel('Fraction of water samples with insufficient quality', fontsize=14)
+    st.pyplot(fig_year)
