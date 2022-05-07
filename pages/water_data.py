@@ -376,7 +376,7 @@ def app():
 
     st.header("But what about the times with a significant amount of insufficient water qualities in the samples?")
     
-    st.plotly_chart(fig3)
+    #st.plotly_chart(fig3)
     
     st.markdown('### **Number of good and bad quality samples based on different indicators for each borough**')
     
