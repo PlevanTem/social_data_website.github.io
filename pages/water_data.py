@@ -335,8 +335,7 @@ def app():
       * E.coli(Quanti-Tray) (MPN/100mL) - **[0 MPN/100ml](https://www2.gnb.ca/content/dam/gnb/Departments/h-s/pdf/en/HealthyEnvironments/water/Coliforme.pdf)**
       """
     )
-    
-   st.markdown(
+    st.markdown(
         """
         These allowable limits were used to devide the levels for each indicator classifying the water as either good below the allowed limits (0) 
         or bad being above the allowed limits (1). Also the overall indicator Water Quality was created that rates the overall water 
