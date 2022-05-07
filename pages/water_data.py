@@ -158,13 +158,6 @@ fig_time = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site"
 fig_time.show()
 
 ### Investigation of the peak frames of the plot above
-#Data Set
-countries=['India', 'Australia', 'Japan', 'America', 'Russia']
- 
-values = [4500, 2500, 1053, 500, 3200]
-
-#The plot
-#fig3 = go.Figure(go.Pie( labels = countries, values = values, hoverinfo = "label+percent",textinfo = "value"))
 
 ### Folium Heatmap with Time for the bad water quality samples in NCY
 
@@ -343,7 +336,7 @@ def app():
       """
     )
     
-    st.markdown(
+   st.markdown(
         """
         These allowable limits were used to devide the levels for each indicator classifying the water as either good below the allowed limits (0) 
         or bad being above the allowed limits (1). Also the overall indicator Water Quality was created that rates the overall water 
@@ -352,8 +345,8 @@ def app():
         """
     )
     
-     st.header("Development of the water quality for the Sample Stations from 2015 - 2022")
-     st.markdown(
+    st.header("Development of the water quality for the Sample Stations from 2015 - 2022")
+    st.markdown(
         """
         Below you can see the development of the water quality for each sample station from 2015 - 2022 with insufficient water quality with one of the indicators 
         being above the allowable limits indicated in red and all indicators being within the presented limits in blue. You might ask yourself here, why not 
