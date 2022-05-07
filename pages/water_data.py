@@ -158,22 +158,22 @@ fig_time = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site"
 fig_time.show()
 
 ### Investigation of the peak frames of the plot above
-#Data Set
-countries=['India', 'Australia',
-           'Japan', 'America',
-           'Russia']
- 
-values = [4500, 2500, 1053, 500,
-          3200]
+def value_count(series):
+    return series.value_counts()[0]
 
-#The plot
-fig3 = go.Figure(
-    go.Pie(
-    labels = countries,
-    values = values,
-    hoverinfo = "label+percent",
-    textinfo = "value"
-))
+def time_group(time, time_name):
+    df_time = df_water.groupby(time).agg({'Water_quality':['count', value_count]}).reset_index()
+    df_time_bor = df_water.groupby([time, 'borough']).agg({'Water_quality':['count', value_count]}).reset_index()
+    df_time.columns = df_time.columns.droplevel()
+    df_time.columns = [time_name, 'count', 'bad_count']
+    df_time_bor.columns = df_time_bor.columns.droplevel()
+    df_time_bor.columns = [time_name, 'borough', 'count', 'bad_count']
+    df_time['frac_bad'] = df_time['bad_count']/df_time['count']
+    df_time['frac_all'] = df_time['bad_count']/len(df_water[df_water['Water_quality']==0])
+    df_time_bor['frac_bad'] = df_time_bor['bad_count']/df_time_bor['count']
+    df_time_bor['frac_all'] = df_time_bor['bad_count']/len(df_water[df_water['Water_quality']==0])
+    return df_time, df_time_bor
+  
 ### Folium Heatmap with Time for the bad water quality samples in NCY
 
 lat_long_list = []
