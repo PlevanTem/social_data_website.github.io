@@ -171,7 +171,7 @@ def time_group(time, time_name):
     df_time['frac_bad'] = df_time['bad_count']/df_time['count']
     df_time['frac_all'] = df_time['bad_count']/len(df[df['Water_quality']==0])
     df_time_bor['frac_bad'] = df_time_bor['bad_count']/df_time_bor['count']
-    df_time_bor['frac_all'] = df_time_bor['bad_count']/len(dfr[df['Water_quality']==0])
+    df_time_bor['frac_all'] = df_time_bor['bad_count']/len(df[df['Water_quality']==0])
     return df_time, df_time_bor
   
 df_month, df_month_bor= time_group('Month', 'Month')
