@@ -107,7 +107,7 @@ items11, items22, items33, items44 = [], [],  [], []
 # create the bars for the three plots
 for indx,i in enumerate(list_of_bars):
     bar11[i] = p11.vbar(x='Year - Month',  top=i, source=cds_month_year, legend_label=i, fill_color=colors[indx], width=0.5)
-    items1.append((dict_legend[i], [bar11[i]]))
+    items11.append((dict_legend[i], [bar11[i]]))
     bar22[i] = p22.vbar(x='Day',  top=i, source=cds_day, legend_label=i, fill_color=colors[indx], width=0.5) 
     items2.append((dict_legend[i], [bar22[i]]))
     bar33[i] = p33.vbar(x='Month',  top=i, source=cds_month, legend_label=i, fill_color=colors[indx], width=0.5) 
