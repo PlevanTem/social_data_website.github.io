@@ -396,7 +396,11 @@ plt.legend()
 
 # Overall trend over the years
 df_year, df_year_bor = time_group('Year', 'Year')
+df_year_filt = df_year[['Year', 'frac_bad']]
+df_year_filt = df_year_filt.set_index('Year')
 
+fig_year = df_year_filt.plot.bar(alpha=0.8, title="Average Measurements per Tumor Type", figsize=(15,7), color='#0000FF',
+                      xlabel='Year', ylabel='Fraction of water samples with insufficient quality', legend=None);
 def app():
     st.markdown('### **What do we all need for living? - Air, Water and Love right?**')
     st.markdown(
