@@ -164,13 +164,7 @@ countries=['India', 'Australia', 'Japan', 'America', 'Russia']
 values = [4500, 2500, 1053, 500, 3200]
 
 #The plot
-fig3 = go.Figure(
-    go.Pie(
-    labels = countries,
-    values = values,
-    hoverinfo = "label+percent",
-    textinfo = "value"
-))
+#fig3 = go.Figure(go.Pie( labels = countries, values = values, hoverinfo = "label+percent",textinfo = "value"))
 
 ### Folium Heatmap with Time for the bad water quality samples in NCY
 
