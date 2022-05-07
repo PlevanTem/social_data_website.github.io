@@ -174,6 +174,81 @@ def time_group(time, time_name):
     df_time_bor['frac_all'] = df_time_bor['bad_count']/len(df_water[df_water['Water_quality']==0])
     return df_time, df_time_bor
   
+df_month, df_month_bor= time_group('Month', 'Month')
+
+plot_month = go.Figure(data=[go.Bar(
+    name='All Boroughs',
+    x=df_month['Month'],
+    y=df_month['frac_bad']
+),
+    go.Bar(
+    name='Bronx',
+    x=df_month_bor[df_month_bor.borough == 'Bronx']['Month'],
+    y=df_month_bor[df_month_bor.borough == 'Bronx']['frac_bad']
+),  
+    go.Bar(
+    name='Brooklyn',
+    x=df_month_bor[df_month_bor.borough == 'Brooklyn']['Month'],
+    y=df_month_bor[df_month_bor.borough == 'Brooklyn']['frac_bad']
+),  
+    go.Bar(
+    name='Staten Island',
+    x=df_month_bor[df_month_bor.borough == 'Staten Island']['Month'],
+    y=df_month_bor[df_month_bor.borough == 'Staten Island']['frac_bad']
+),  
+    go.Bar(
+    name='Manhattan',
+    x=df_month_bor[df_month_bor.borough == 'Manhattan']['Month'],
+    y=df_month_bor[df_month_bor.borough == 'Manhattan']['frac_bad']
+),  
+    go.Bar(
+    name='Queens',
+    x=df_month_bor[df_month_bor.borough == 'Queens']['Month'],
+    y=df_month_bor[df_month_bor.borough == 'Queens']['frac_bad']
+),  
+])
+
+plot_month.update_layout(
+    updatemenus=[
+        dict(
+            active=0,
+            buttons=list([
+                dict(label="All Boroughs",
+                     method="update",
+                     args=[{"visible": [True, True, True, True, True, True]},
+                           {"title": "All Boroughs",
+                            }]),
+                dict(label="Bronx",
+                     method="update",
+                     args=[{"visible": [False, True, False, False, False, False]},
+                           {"title": "Bronx",
+                            }]),
+                dict(label='Brooklyn',
+                     method="update",
+                     args=[{"visible": [False, False, True, False, False, False]},
+                           {"title": 'Brooklyn',
+                            }]),
+                dict(label='Staten Island',
+                     method="update",
+                     args=[{"visible": [False, False, False, True, False, False]},
+                           {"title": 'Staten Island',
+                            }]),
+                dict(label="Manhattan",
+                     method="update",
+                     args=[{"visible": [False, False, False, False, True, False]},
+                           {"title": "Manhattan",
+                            }]),
+                dict(label="Queens",
+                     method="update",
+                     args=[{"visible": [False, False, False, False, False, True]},
+                           {"title": "Queens",
+                            }]),
+            ]),
+        )
+    ])
+  
+plot_month.show()
+  
 ### Folium Heatmap with Time for the bad water quality samples in NCY
 
 lat_long_list = []
@@ -377,7 +452,7 @@ def app():
 
     st.header("But what about the times with a significant amount of insufficient water qualities in the samples?")
     
-    st.plotly_chart(fig3)
+    st.plotly_chart(plot_month)
     
     st.markdown('### **Number of good and bad quality samples based on different indicators for each borough**')
     
