@@ -569,4 +569,4 @@ def app():
     )
     st.pyplot(fig_years)
     
-    st.markdown(**'If you want to know more about the water in NYC, check out the NY state water [website](https://water.ny.gov/doh2/applinks/waterqual/#/home)!**')
+    st.markdown('**If you want to know more about the water in NYC, check out the NY state water [website](https://water.ny.gov/doh2/applinks/waterqual/#/home)!**')
