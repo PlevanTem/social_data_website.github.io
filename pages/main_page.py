@@ -122,5 +122,5 @@ def app():
     st.markdown('Something here')
 
     st.markdown('## Heatmap of Water Quality, Recycling Data & Traffic Volume (oh my god')
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True, height=800)
     
