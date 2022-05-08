@@ -293,17 +293,95 @@ HeatMapWithTime(
 
 
 def app():
+
+    st.markdown(
+        """
+        We all know that New York City has tons of traffic. 
+
+        We want to investigate whether the New York traffic has an influence on the water quality.
+
+        Specifically, we would like to investigate whether huge amounts of traffic has a negative effect on the quality of the drinking water in New York City.
+
+        While air pollution is the most visible and studied environmental consequence of transportation systems, water pollution and wetlands issues are also of crucial importance. For instance; fuel, particles, and salt-laden runoff from streets and highways result in damage to roadside soil, vegetation and trees, ponds and water supplies ([source](https://courses.washington.edu/gmforum/topics/trans_water/trans_water.htm)). The impact from the road may also contribute to other forms of water pollution, like [water turbidity](https://www.usgs.gov/special-topics/water-science-school/science/turbidity-and-water). The Environmental Protection Agency (EPA) and many States have issued regulations implementing the CWA goal of achieving and maintaining a high standard of water quality in surface and ground waters ([source](https://www.epa.gov/ny)), and [The Clean Water Act](https://www.encyclopedia.com/earth-and-environment/ecology-and-environmentalism/environmental-studies/clean-water-act-1977) gives states the responsibility to monitor and assess their waters and report the results to the EPA.
+
+        However, Water contamination often is discovered long after it has occurred. This means that the practices of today may have effects on water quality well into the future, well before we understand the full ramifications of transportation and water issues. 
+
+        In this analysis, we are particularly interested in traffic and water quality in New York City.
+
+        We there took a look at [this dataset about New York traffic](https://data.cityofnewyork.us/Transportation/Traffic-Volume-Counts-2012-2013-/p424-amsu), containing roughly 27.000 observations of traffic volume counts collected by [The New York City Department of Transportation’s (NYC DOT)](https://www1.nyc.gov/html/dot/html/about/about.shtml) for New York Metropolitan Transportation Council (NYMTC) to validate the New York Best Practice Model (NYBPM) ([source](https://www.kaggle.com/datasets/new-york-city/ny-traffic-volume-counts-2012-2013)). (**Note**: Whilst conducting this work, the dataset has been taken off the [NYC Opendata website](https://opendata.cityofnewyork.us/) and thus the work mentioned in this part (traffic) cannot be dublicated).
+
+
+        The dataset only contained, in the time interval '2015-02-07' to '2021-05-09':
+        - Date
+        - Street name
+        - Time
+        - Traffic volume
+
+        Thus, the core steps in the preprocessing of this data consisted of:
+        - Enriching the data with latitude and longitude pr "street name" (e.g. 156 Street)
+        - Enriching the data with what borough (that is e.g. Queens, Staten Island etc..) these street belong to
+        """
+    )
+
+
     st.markdown('## Traffic Volume of all 5 NYC boroughs')
     st.plotly_chart(fig0)
+
+    st.markdown(
+        """
+        From the past 6 years of observed traffic data, we see that [Staten Island](https://en.wikipedia.org/wiki/Staten_Island#Demographics) has the least amount of traffic with "only" about 25 million vehicles. 
+        The borough with the highest amount of traffic in the observed period is [Manhattan](https://en.wikipedia.org/wiki/Manhattan) with 67 million observed vehicles, followed closely by [Queens](https://en.wikipedia.org/wiki/Queens), [Brooklyn](https://en.wikipedia.org/wiki/Brooklyn) and [Bronx](https://en.wikipedia.org/wiki/The_Bronx) with 53, 52 and 47 million observed vehicles, respectively.
+        """
+    )
+
 
     st.markdown('## Traffic Volume between the 5 NYC boroughs (during the day)')
     st.plotly_chart(fig1)
 
+    st.markdown(
+        """
+        If we take a look at how the traffic evolved during a typical day (aggregated per hour), we can clearly see a pattern for each borough of
+        - Low amount of traffic between hours 0 and 5 of the day (that is from 12AM to 5.59AM)
+        - The morning traffic hitting from 7AM
+        - From 8AM and 9AM a steady increase of traffic until
+        - A dip in the amount of traffic from 6PM until the night hours (12AM)
+
+        This is not surprising.
+        """
+    )
+
+
     st.markdown('## Traffic Volume between the 5 NYC boroughs (per year)')
     st.plotly_chart(fig2)
+
+    st.markdown(
+        """
+        If we look at the traffic volume between the 5 NYC boroughs (aggregated per year), we do see two years that seem to be wrong, entirely. <br>
+        This is due to the fact that this dataset is manually made from people going out an actually observing the traffic. *Over 5,500 employees of NYC DOT oversee one of the most complex urban transportation networks in the world.* [source](https://www1.nyc.gov/html/dot/html/about/about.shtml)
+
+        Thus, in the year 2018 is would be appropriate to assume that there were less people allocated to observe vehicles than the previous years, and it would be safe to assume the drop in year 2021 is due to the data only being until end of April. This holds for all boroughs.
+        """
+    )
+
 
     st.markdown('## Traffic Volume between the 5 NYC boroughs (per date)')
     st.bokeh_chart(tabs, use_container_width=True)
 
+    st.markdown(
+        """
+        What we see from the above plot is that there, for all boroughs, is a spread in *when* the traffic volume was the highest. <br>
+        We note from our plot that most of the traffic counted was in the months September, October and November, and that a severly low fraction of traffic observed was in the months January to May. <br>
+        The gap between May and September may be due to no observations being made in that period of time by the New York Department Of Transportation.
+        """
+    )
+
     st.markdown('## Heatmap of Traffic Volume between the 5 NYC boroughs (per date)')
     folium_static(ny_map)
+
+    st.markdown(
+        """
+        What we see from the heatmap above is where the observations per day were made.
+
+        Here, we note that a vast amount of the observations were made in Manhattan.
+        """
+    )
