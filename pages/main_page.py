@@ -80,7 +80,7 @@ df_merged = pd.read_csv('data/df_merged.csv')
 
 
 
-with open('Borough Boundaries.geojson') as f:
+with open('data/Borough Boundaries.geojson') as f:
     gj = geojson.load(f)
 
 
