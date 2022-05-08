@@ -122,5 +122,5 @@ def app():
     st.markdown('Something here')
 
     st.markdown('## Heatmap of Water Quality, Recycling Data & Traffic Volume (oh my god')
-    folium_static(fig)
+    st.plotly_chart(fig)
     
