@@ -554,13 +554,19 @@ def app():
     st.header('Overall development of Water quality in NYC from 2015 - 2022')
     st.markdown(
         """
-        **So are the exceedings of turbidity levels concerning? No, for a turbidity level between 1 and 5, the threats to the public's health are modest.**
+        **So are the exceedings of turbidity levels concerning? No, for a turbidity level between 1 and 5 NTU, the threats to the public's health are modest.**
         
-        Overall, there has been a positive development in water quality since 2015 and with the continous monitoring and NYC commitment to the 
-        [SDGs](https://www1.nyc.gov/site/international/programs/global-vision-urban-action.page) this trend should continue. Especially because the 
-        climate change leads to higher turbidity levels due to more and more intense rains, stronger storms or higher river levels according to the 
+        Overall, there has been a positive development in water quality since 2015 as can be seen in the left figure below
+        and with the continous monitoring and NYC commitment to the [SDGs](https://www1.nyc.gov/site/international/programs/global-vision-urban-action.page) 
+        this trend should continue. Especially because the climate change leads to higher turbidity levels due to more and more intense rains, 
+        stronger storms or higher river levels according to the 
         [United States Environmental Protection Agency](https://www.epa.gov/arc-x/climate-adaptation-and-erosion-sedimentation) and because turbidity can
         hinder the effectiveness of water disinfection, it is important to take measures if consistent higher levels of turbidity are observed.
+        
+        When taking into account the limit of 5 NTU for Turbidity where the risks are modest, you can observe from the right figure below that the fraction 
+        of water samples with insufficient quality has been consistently below 1% in each year from 2015 - 2022.
         """
     )
     st.pyplot(fig_years)
+    
+    st.markdown(**'If you want to know more about the water in NYC, check out the NY state water [website](https://water.ny.gov/doh2/applinks/waterqual/#/home)!**')
