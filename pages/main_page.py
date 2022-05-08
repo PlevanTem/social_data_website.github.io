@@ -76,7 +76,7 @@ from pandas.io.formats.format import Datetime64Formatter
 # df_merged.dropna(inplace=True)
 
 # Read df_merged
-df_merged = pd.read_csv('df_merged.csv')
+df_merged = pd.read_csv('data/df_merged.csv')
 
 
 
