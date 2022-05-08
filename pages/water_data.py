@@ -401,6 +401,10 @@ df_year_filt = df_year_filt.set_index('Year')
 
 fig_year = df_year_filt.plot.bar(alpha=0.8, title="Average Measurements per Tumor Type", figsize=(15,7), color='#0000FF',
                       xlabel='Year', ylabel='Fraction of water samples with insufficient quality', legend=None);
+
+fig_years, ax_years = plt.subplots(1, 2, figsize=(15,7))
+ax_years[0].bar(df_year['Year'], df_year['frac_bad'], color='#0000FF')
+
 def app():
     st.markdown('### **What do we all need for living? - Air, Water and Love right?**')
     st.markdown(
@@ -541,4 +545,4 @@ def app():
         hinder the effectiveness of water disinfection, it is important to take measures if consistent higher levels of turbidity are observed.
         """
     )
-    #st.pyplot(fig_year)
+    st.pyplot(fig_years)
