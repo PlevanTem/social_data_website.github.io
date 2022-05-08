@@ -396,14 +396,32 @@ plt.legend()
 
 # Overall trend over the years
 df_year, df_year_bor = time_group('Year', 'Year')
-df_year_filt = df_year[['Year', 'frac_bad']]
-df_year_filt = df_year_filt.set_index('Year')
-
-fig_year = df_year_filt.plot.bar(alpha=0.8, title="Average Measurements per Tumor Type", figsize=(15,7), color='#0000FF',
-                      xlabel='Year', ylabel='Fraction of water samples with insufficient quality', legend=None);
+for index, row in df.iterrows():
+    if row['Turbidity (NTU)']>5:
+        df.at[index, 'Turbidity_level_new']=0
+    else:
+        df.at[index, 'Turbidity_level_new']=1
+        
+for index, row in df.iterrows():
+    if row['Chlorine_level'] == 0 or row['Turbidity_level_new'] == 0 or row['Fluoride_level'] == 0 or \
+    row['Coliform_level']== 0 or row['Ecoli_level'] == 0:
+        df.at[index, 'Water_quality_new'] = 0
+    else:
+        df.at[index, 'Water_quality_new'] = 1
+       
+df_year_new = time_ind_group('Year', 'Year', 'Water_quality_new')
 
 fig_years, ax_years = plt.subplots(1, 2, figsize=(15,7))
 ax_years[0].bar(df_year['Year'], df_year['frac_bad'], color='#0000FF')
+ax_years[0].set_title('Development of bad quality water samples with Turbidity limit of 1 NTU')
+ax_years[0].set_xlabel('Year', fontsize=14)
+ax_years[0].set_ylabel('Fraction of samples with insufficient water quality', fontsize=14)
+ax_years[1].bar(df_year_new['Year'], df_year_new['frac_bad'], color='#0000FF')
+ax_years[1].set_title('Development of bad quality water samples with Turbidity limit of 5 NTU')
+ax_years[1].set_xlabel('Year', fontsize=14)
+ax_years[1].set_ylabel('Fraction of samples with insufficient water quality', fontsize=14)
+ax_years[1].set_ylim(0, 0.25)
+ax_years[1].axhline(0.01, color='#FF0000')
 
 def app():
     st.markdown('### **What do we all need for living? - Air, Water and Love right?**')
