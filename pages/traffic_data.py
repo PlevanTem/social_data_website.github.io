@@ -385,3 +385,11 @@ def app():
         Here, we note that a vast amount of the observations were made in Manhattan.
         """
     )
+
+
+    st.markdown(
+        """
+        **Findings**:
+        Some findings?
+        """
+    )
