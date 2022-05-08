@@ -226,7 +226,7 @@ from shapely.geometry import Polygon
 parsed_data = [Polygon(item['geometry']['coordinates'][0]) for item in nyc_cd_geojson['features']]
 df_borcd_collected['geometry'] = df_borcd_collected.apply(lambda x:Polygon(nycgeo[x.BOR_CD]['coordinates'][0]),axis=1)
 
-df_borcd_collected.head()
+#df_borcd_collected.head()
 
 """pandas DataFrame To GeoDataFrame"""
 
@@ -236,7 +236,7 @@ df = gpd.GeoDataFrame(df, crs="EPSG:4326", geometry='geometry') # transform data
 df.BOR_CD = df.BOR_CD.astype('str') # so colorbar would not treat BOR_CD as 
 df['date_str'] = df['DATE'].apply(lambda x: str(x)) # create a str date column
 
-df.head()
+#df.head()
 
 collect_avg_by_cd = df.groupby(["BOROUGH",'BOR_CD']).mean().reset_index()
 # match geometry polygon coordinates from nyc community district geojson
@@ -251,7 +251,7 @@ fig2 = px.bar(collect_avg_by_cd.sort_values(by='TOTALCOLLECTED',ascending=False)
 
 fig2.update_yaxes(title_text='Total Collected Resources(T)',ticksuffix="T") # customize y label tick
 
-fig2.show()
+#fig2.show()
 
 """**Findings**:  
 Community 412 is the most recycled collection origin, with around 8000T materials collected, while community 101 had the least collection, with only about 1/4 of 412's collection.
@@ -284,7 +284,7 @@ fig3.update_layout(
     title_text='The Average Amount of NYC Recycled Collection by Community District'
 )
 
-fig3.show()
+#fig3.show()
 
 """### folium/Geopandas
 https://geopandas.org/en/stable/gallery/polygon_plotting_with_folium.html
@@ -352,7 +352,7 @@ colormap.add_to(m)
 colormap.caption = 'Recycled collection amount'
 colormap.add_to(m)
 
-m
+#m
 
 df_bins.groupby('borough')['site_type'].count()\
     .sort_values().plot(kind='bar',
