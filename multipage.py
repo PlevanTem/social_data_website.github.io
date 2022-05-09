@@ -42,13 +42,7 @@ class MultiPage:
         with col1:
             but1 = st.button('Water Data')
             if but1:
-                #page = self.pages[0]
-
-                page = st.sidebar.selectbox(
-                    'App Navigation', 
-                    self.pages[0], 
-                    format_func=lambda page: page['title']
-                    )
+                page = self.pages[0], page.pages[0]['title']
 
 
         # run the app function 
