@@ -30,37 +30,12 @@ class MultiPage:
         )
 
     def run(self):
-
-
-        # for four buttons (at the top)
-        col1, col2, col3, col4 = st.columns(4)
-        with col1:
-            but1 = st.button('Water Data')
-            if but1:
-                page = self.pages[0]
-
-        with col2:
-            but2 = st.button('Recycling Data')
-            if but2:
-                page = self.pages[1]
-
-        with col3:
-            but3 = st.button('Traffic Data')
-            if but3:
-                page = self.pages[2]
-
-        with col4:
-            but4 = st.button('Results')
-            if but4:
-                page = self.pages[3]
-
-
         # Dropdown to select the page to run  
         page = st.sidebar.selectbox(
             'App Navigation', 
             self.pages, 
             format_func=lambda page: page['title']
         )
-        
+
         # run the app function 
         page['function']()
