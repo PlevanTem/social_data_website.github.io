@@ -31,8 +31,8 @@ class MultiPage:
 
     def run(self):
         # Dropdown to select the page to run  
-        page = st.sidebar.selectbox(
-            'App Navigation', 
+        page = st.sidebar.radio(
+            'Website Navigation', 
             self.pages, 
             format_func=lambda page: page['title']
         )
