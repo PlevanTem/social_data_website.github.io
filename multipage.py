@@ -41,16 +41,16 @@ class MultiPage:
         )
 
         if page == self.pages[0]:
-            my_bar.progress(25 + 1)
+            my_bar.progress(25)
 
         if page == self.pages[1]:
-            my_bar.progress(50 + 1)
+            my_bar.progress(50)
 
         if page == self.pages[2]:
-            my_bar.progress(75 + 1)
+            my_bar.progress(75)
 
         if page == self.pages[3]:
-            my_bar.progress(100 + 1)
+            my_bar.progress(100)
 
 
         # run the app function 
