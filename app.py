@@ -20,12 +20,6 @@ app = MultiPage()
 #t1.image('images/new_york_traffic.jpg')
 st.title("Exploring Water Quality in New York City in combination with Recycling data and Traffic data")
 
-with st.expander("ℹ️ - About this app", expanded=False):
-    st.write(
-    """     
-    You can write something here that expands, possibly about how to interpret your plots
-    """
-)
 
 # Add all your application here
 app.add_page("Water Data", water_data.app)
@@ -36,3 +30,10 @@ app.add_page("Results", results.app)
 
 # The main app
 app.run()
+
+with st.expander("ℹ️ - About this app", expanded=False):
+    st.write(
+    """     
+    You can write something here that expands, possibly about how to interpret your plots
+    """
+)
