@@ -48,7 +48,7 @@ class MultiPage:
 
         if page == self.pages[0]:
             my_bar.progress(25)
-            st.sidebar.button('[Try this link](#water)')
+            st.sidebar.button('[Try this link](#water)', unsafe_allow_html=True)
 
         if page == self.pages[1]:
             my_bar.progress(50)
