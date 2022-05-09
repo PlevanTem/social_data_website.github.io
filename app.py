@@ -37,3 +37,6 @@ with st.expander("ℹ️ - About this app", expanded=False):
     You can write something here that expands, possibly about how to interpret your plots
     """
 )
+
+# Horizontal widget
+st.write('div.row-widget.stRadio > div{flex-direction:row;justify-content: center}', unsafe_allow_html=True)
