@@ -257,22 +257,6 @@ plot_month.update_layout(
   
 plot_month.show()
   
-### Folium Heatmap with Time for the bad water quality samples in NCY
-
-lat_long_list = []
-df_water_bad = df[df.Water_quality == 0]
-times = list(np.sort(df['Year - Month'].unique()))
-for time in times:
-    temp=[]
-    for index,  row in df_water_bad[df_water_bad['Year - Month'] == time].iterrows():
-        temp.append([row['lat'],row['lon']])
-    lat_long_list.append(temp)
-    
-fig = folium.Figure(width=850,height=550)
-ny_map_heat=folium.Map(location=[40.70, -73.94],zoom_start=10)
-fig.add_child(ny_map_heat)
-HeatMapWithTime(lat_long_list,radius=5,auto_play=True,position='bottomright').add_to(ny_map_heat)
-
 ### Bokeh plot of the different indicators per borough
 
 def grouping(indicator):
