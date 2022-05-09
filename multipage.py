@@ -42,12 +42,13 @@ class MultiPage:
 
         st.markdown(
             """
-            <div style="text-align: center"> Website progress </div>
+            Website progress
             """
         )
 
         if page == self.pages[0]:
             my_bar.progress(25)
+            st.sidebar.button('[Try this link](#water)')
 
         if page == self.pages[1]:
             my_bar.progress(50)
