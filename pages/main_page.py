@@ -76,51 +76,51 @@ from pandas.io.formats.format import Datetime64Formatter
 # df_merged.dropna(inplace=True)
 
 # Read df_merged
-df_merged = pd.read_csv('data/df_merged.csv')
+# df_merged = pd.read_csv('data/df_merged.csv')
 
 
 
-with open('data/Borough Boundaries.geojson') as f:
-    gj = geojson.load(f)
+# with open('data/Borough Boundaries.geojson') as f:
+#     gj = geojson.load(f)
 
 
-text = df_merged.apply(
-    lambda row: f"<br>Total collected:{round(row['TOTALCOLLECTED'],2)}T<br>Traffic Volume:{round(row['Traffic_Volume'],2)}", axis=1),
+# text = df_merged.apply(
+#     lambda row: f"<br>Total collected:{round(row['TOTALCOLLECTED'],2)}T<br>Traffic Volume:{round(row['Traffic_Volume'],2)}", axis=1),
 
 
 
-# set plotly default theme
-pio.templates.default = 'plotly_white'
+# # set plotly default theme
+# pio.templates.default = 'plotly_white'
 
-figsize=(20, 10)
+# figsize=(20, 10)
 
-fig = px.choropleth_mapbox(df_merged,
-          geojson=gj, 
-          locations=df_merged.borough,
-          featureidkey="properties.boro_name",
-          center = {"lat": 40.70, "lon": -73.94},
-          mapbox_style="carto-positron",
-          opacity=0.5,
-          color='Residual Free Chlorine (mg/L)',
-          animation_group="borough",
-          hover_name="borough",
-          hover_data=text,
-          color_continuous_scale=px.colors.sequential.deep,
-          zoom=9,
-          range_color=(0,1.2),
-          title='Water Quality in New York City in combination with Recycling data and Traffic data',
-          animation_frame="date_str")
+# fig = px.choropleth_mapbox(df_merged,
+#           geojson=gj, 
+#           locations=df_merged.borough,
+#           featureidkey="properties.boro_name",
+#           center = {"lat": 40.70, "lon": -73.94},
+#           mapbox_style="carto-positron",
+#           opacity=0.5,
+#           color='Residual Free Chlorine (mg/L)',
+#           animation_group="borough",
+#           hover_name="borough",
+#           hover_data=text,
+#           color_continuous_scale=px.colors.sequential.deep,
+#           zoom=9,
+#           range_color=(0,1.2),
+#           title='Water Quality in New York City in combination with Recycling data and Traffic data',
+#           animation_frame="date_str")
 
-fig.update_layout(
-    title_text='Water Quality in New York City in combination with Recycling data and Traffic data'
-)
+# fig.update_layout(
+#     title_text='Water Quality in New York City in combination with Recycling data and Traffic data'
+# )
 
-fig.show()
+# fig.show()
 
 
 def app():
     st.markdown('Something here')
 
     st.markdown('## Heatmap of Water Quality, Recycling Data & Traffic Volume (oh my god')
-    st.plotly_chart(fig, use_container_width=True, height=800)
+    #st.plotly_chart(fig, use_container_width=True, height=600)
     
