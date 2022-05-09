@@ -39,4 +39,4 @@ with st.expander("ℹ️ - About this app", expanded=False):
 )
 
 # Horizontal widget
-st.write('div.row-widget.stRadio > div{flex-direction:row;justify-content: center}', unsafe_allow_html=True)
+st.write('<style>div.Widget.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
