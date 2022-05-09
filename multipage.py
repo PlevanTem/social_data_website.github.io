@@ -40,13 +40,9 @@ class MultiPage:
         # for four buttons (at the top)
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            page = st.button(self.pages[0])
-        with col2: 
-            page = st.button(self.pages[1])
-        with col3:
-            page = st.button(self.pages[2])
-        with col4:
-            page = st.button(self.pages[3])
+            but1 = st.button('Water Data')
+            if but1:
+                page = self.pages[0]
 
 
         # run the app function 
