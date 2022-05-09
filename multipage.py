@@ -38,7 +38,7 @@ class MultiPage:
         )
 
         # for four buttons (at the top)
-        col1, col2, col3, col4 = st.columns([1, 0.1, 1, 0.1, 1, 0.1, 1])
+        col1, col2, col3, col4 = st.columns(4)
         with col1:
             page = st.button(self.pages[0])
         with col2: 
