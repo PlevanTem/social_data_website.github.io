@@ -7,7 +7,7 @@ import plotly
 
 # Custom imports 
 from multipage import MultiPage
-from pages import main_page, recycling_data, traffic_data, water_data
+from pages import recycling_data, results, traffic_data, water_data
 
 # Wide page
 st.set_page_config(page_title="Social Data And Visualization", page_icon="🐍", layout="wide", initial_sidebar_state="auto", menu_items=None,) 
@@ -28,10 +28,10 @@ with st.expander("ℹ️ - About this app", expanded=False):
 )
 
 # Add all your application here
-app.add_page("Main Page", main_page.app)
+app.add_page("Water Data", water_data.app)
 app.add_page("Recycling Data", recycling_data.app)
 app.add_page("Traffic Data", traffic_data.app)
-app.add_page("Water Data", water_data.app)
+app.add_page("Results", results.app)
 
 
 # The main app
