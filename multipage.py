@@ -40,6 +40,12 @@ class MultiPage:
             format_func=lambda page: page['title']
         )
 
+        st.markdown(
+            """
+            <div style="text-align: center"> Website progress </div>
+            """
+        )
+
         if page == self.pages[0]:
             my_bar.progress(25)
 
