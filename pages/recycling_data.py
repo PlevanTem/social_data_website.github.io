@@ -359,9 +359,10 @@ df_bins.groupby('borough')['site_type'].count()\
               title='No. of trash bins in 5 boroughs',
               color=['green','pink','red','blue','black'])
               
-df_merged = pd.read_csv('df_merged.csv')
+df_merged = pd.read_csv('data/df_merged.csv')
+
 import geojson
-with open('Borough Boundaries.geojson') as f:
+with open('data/Borough Boundaries.geojson') as f:
     gj = geojson.load(f)
 
 text=df_merged.apply(lambda row: f"<br>Total collected:{round(row['TOTALCOLLECTED'],2)}T<br>Traffic Volume:{round(row['Traffic_Volume'],2)}", axis=1),
