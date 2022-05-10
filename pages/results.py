@@ -57,7 +57,7 @@ matrix = df_merged_scaled.corr(method='pearson')
 mask = np.triu(np.ones_like(matrix, dtype=bool))
 
 fig_heatmap, ax = plt.subplots()
-sns.heatmap(matrix, mask=mask, cmap=cmap, square=True, annot=True, fmt=".2f", ax=ax)
+fig_heatmap = sns.heatmap(matrix, mask=mask, cmap=cmap, square=True, annot=True, fmt=".2f", ax=ax)
 
 boroughs = sorted(df_merged.borough.unique().tolist())
 
@@ -153,7 +153,7 @@ def app():
             mask = np.triu(np.ones_like(matrix, dtype=bool))
 
             p, ax = plt.subplots()
-            sns.heatmap(matrix, mask=mask, cmap=cmap, square=True, annot=True, fmt=".2f", ax=ax)
+            p = sns.heatmap(matrix, mask=mask, cmap=cmap, square=True, annot=True, fmt=".2f", ax=ax)
             st.markdown(f'Showing correlation for {borough}')
             st.write(p)
 
