@@ -1,4 +1,4 @@
-# <p style="text-align: center;"> Traffic, Recycling & Water Quality <p>
+# <p style="text-align: center;"> Traffic, Recycling & Water Quality in New York City<p>
     
 This webpage holds the findings for the final project in the course 02806 Social data analysis and visualization, taught in Spring 2022 at the Technical University of Denmark (DTU), Lyngby, Copenhagen.
     
