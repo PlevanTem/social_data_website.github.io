@@ -56,7 +56,7 @@ class MultiPage:
             
             Are you curious about the sanity of the water you drink everyday? We took at look at whether water quality is being affected by the traffic and recycling initiatives in New York City.
 
-            To get the best experience of this website, you should go through the pages in the followign order:
+            To get the best experience of this website, you should go through the pages in the following order:
             1. `Water Data` 
             2. `Recycling Data` 
             3. `Traffic Data`
