@@ -365,7 +365,7 @@ import geojson
 with open('data/Borough Boundaries.geojson') as f:
     gj = geojson.load(f)
 
-text=df_merged.apply(lambda row: f"<br>Total collected:{round(row['TOTALCOLLECTED'],2)}T<br>Traffic Volume:{round(row['Traffic_Volume'],2)}", axis=1),
+text = df_merged.apply(lambda row: f"""<br>Total collected:{round(row['TOTALCOLLECTED'],2)}T<br>Traffic Volume:{round(row['Traffic_Volume'],2)}""", axis=1),
 
 figsize=(20, 10)
 
