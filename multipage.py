@@ -65,9 +65,7 @@ class MultiPage:
 
             We hope you enjoy the journey of our website 😊
 
-            If you are cusious about what is happening behind the scenes, take a look at our [GitHub page](https://github.com/ChristianRoesselDTU/social_data_website.github.io) 🐍 - ssssss
-
-            You can also visit our [GitHub page](https://github.com/ChristianRoesselDTU/social_data_website.github.io) to see how we did it! 
+            If you are curious about what is happening behind the scenes, you can visit our [GitHub page](https://github.com/ChristianRoesselDTU/social_data_website.github.io) to see how we did it! 
             
             There, amongst other things, you will find a link to our [Notebook behind the scenes](https://github.com/ChristianRoesselDTU/social_data_website.github.io/raw/main/Explainer_Notebook_final.ipynb.zip) and [the data necessary to run it](https://github.com/ChristianRoesselDTU/social_data_website.github.io/raw/main/data.zip) (The notebook needs to be in the same folder as the data folder to run).
 
