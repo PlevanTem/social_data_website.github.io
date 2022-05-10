@@ -298,7 +298,7 @@ def app():
         """
         ## The End.
 
-        Now that you have seen our story, you can also visit our [GitHub page](https://github.com/ChristianRoesselDTU/social_data_website.github.io) to see how we did it! There, amongst other things, you will find a link to our [Notebook behind the scenes](https://nbviewer.org/github/ChristianRoesselDTU/social_data_website.github.io/blob/8df86f273ec4848afb97228f110fc7c005d13f68/Explainer_Notebook.ipynb#6-Contribution-table)
+        Now that you have seen our story, you can also visit our [GitHub page](https://github.com/ChristianRoesselDTU/social_data_website.github.io) to see how we did it! There, amongst other things, you will find a link to our [Notebook behind the scenes](https://github.com/ChristianRoesselDTU/social_data_website.github.io/blob/main/Explainer_Notebook_final_v2.html) or you can download the notebook [here](https://github.com/ChristianRoesselDTU/social_data_website.github.io/raw/main/Explainer_Notebook_final.ipynb.zip)
         """
 
     )
