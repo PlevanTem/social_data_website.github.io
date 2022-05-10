@@ -54,8 +54,8 @@ matrix = df_merged_scaled.corr(method='pearson')
 # Create a mask
 mask = np.triu(np.ones_like(matrix, dtype=bool))
 
-fig_heatmap, ax = plt.subplots(figsize=(7, 7))
-fig_heatmap = sns.heatmap(matrix, mask=mask, cmap=cmap, square=True, annot=True, fmt=".2f", ax=ax)
+
+fig_heatmap = sns.heatmap(matrix, mask=mask, cmap=cmap, square=True, annot=True, fmt=".2f")
 
 boroughs = sorted(df_merged.borough.unique().tolist())
 
