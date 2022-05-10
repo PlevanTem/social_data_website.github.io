@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
 import geojson
-
+import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
@@ -14,69 +14,51 @@ from streamlit_folium import folium_static
 import datetime
 from pandas.io.formats.format import Datetime64Formatter
 
-# # Water quality data preprocessing
-# df_water = pd.read_csv('data/Water_quality.csv')
-# df_water['Year - Month'] = df_water['Year'].astype('str') + "-" + df_water['Month'].astype('str')
-# df_water['Year - Month'] = pd.to_datetime(df_water['Year - Month']).dt.to_period('M')
+from sklearn.preprocessing import MinMaxScaler
+import seaborn as sns
 
-# df_water_bad = df_water[df_water.Water_quality == 0]
-# df_water_monthly = df_water_bad.groupby(['Year - Month','borough'])[['Residual Free Chlorine (mg/L)']].mean().reset_index()
-
-
-# # Traffic data preprocessing
-# df_traffic = pd.read_csv('data/traffic_data.csv', parse_dates=['Date'])
-# df_traffic['Year - Month'] = df_traffic['Date'].dt.to_period('M')
-
-# df_traffic_day = df_traffic.groupby(['Date', 'borough_roadway'])['Traffic_Volume'].sum().reset_index(drop=False)
-# df_traffic_day['Year - Month'] = pd.to_datetime(df_traffic_day['Date'], format='%Y/%m/%d').dt.to_period('M')
-
-# df_traffic_day_monthly = df_traffic_day.groupby(['Year - Month','borough_roadway']).mean().reset_index()
-# df_traffic_day_monthly.rename(columns={'borough_roadway':'borough'},inplace='True')
-
-
-# # Recycling data preprocessing
-# df_recycling = pd.read_csv('data/Total_collection_of_NYC_from_2015_to_2021.csv',index_col=0)
-# df_recycling['Year - Month'] = pd.to_datetime(df_recycling['DATE'], format='%Y/%m/%d').dt.to_period('M')
-
-# df_recycling_by_month = df_recycling.groupby(['Year - Month','BOROUGH']).mean().reset_index()
-# df_recycling_by_month.drop(columns = 'BOR_CD',inplace=True)
-# df_recycling_by_month.rename(columns={'BOROUGH':'borough'},inplace='True')
-
-# # Limiting date to same time range. Based on the 3 dataframes above, it should be from 2015-02 to 2021-05
-# df_recycling_by_month = df_recycling_by_month[
-#     (df_recycling_by_month['Year - Month'] >= '2015-02') & 
-#     (df_recycling_by_month['Year - Month'] <= '2021-05')
-# ]
-
-# df_traffic_day_monthly = df_traffic_day_monthly[
-#     (df_traffic_day_monthly['Year - Month'] >= '2015-02') & 
-#     (df_traffic_day_monthly['Year - Month'] <= '2021-05')
-# ]
-
-# df_water_monthly = df_water_monthly[
-#     (df_water_monthly['Year - Month'] >= '2015-02') & 
-#     (df_water_monthly['Year - Month'] <= '2021-05')
-# ]
-
-# # Merging
-# temp = pd.merge(df_recycling_by_month, 
-#                 df_traffic_day_monthly, 
-#                 how='outer', 
-#                 on=['Year - Month', 'borough']
-#                )
-
-# df_merged = pd.merge(df_water_monthly, 
-#                      temp, 
-#                      how='left', 
-#                      on=['Year - Month', 'borough']
-#                     )
-
-# df_merged['date_str'] = df_merged['Year - Month'].apply(lambda x: str(x))
-
-# df_merged.dropna(inplace=True)
 
 # Read df_merged
 df_merged = pd.read_csv('data/df_merged.csv')
+
+scaler = MinMaxScaler()
+
+scalable_columns = [
+    'Residual Free Chlorine (mg/L)',
+    'Turbidity (NTU)',
+    'Fluoride (mg/L)',
+    'Coliform_float',
+    'Ecoli_float',
+    'TOTALCOLLECTED',
+    'Traffic_Volume'
+]
+
+
+df_merged_scaled = df_merged.copy()
+df_merged_scaled[scalable_columns] \
+    = scaler.fit_transform(df_merged_scaled[scalable_columns])
+
+
+cmap = sns.diverging_palette(
+    250, 
+    15, 
+    s=75, 
+    l=40, 
+    n=9, 
+    center='light', 
+    as_cmap=True
+)
+
+matrix = df_merged_scaled.corr(method='pearson')
+
+# Create a mask
+mask = np.triu(np.ones_like(matrix, dtype=bool))
+
+fig_heatmap, ax = plt.subplots(figsize=(7, 7))
+fig_heatmap = sns.heatmap(matrix, mask=mask, cmap=cmap, square=True, annot=True, fmt=".2f", ax=ax)
+
+boroughs = sorted(df_merged.borough.unique().tolist())
+
 
 
 
@@ -86,7 +68,6 @@ with open('data/Borough Boundaries.geojson') as f:
 
 text = df_merged.apply(
     lambda row: f"<br>Total collected:{round(row['TOTALCOLLECTED'],2)}T<br>Traffic Volume:{round(row['Traffic_Volume'],2)}", axis=1),
-
 
 
 # set plotly default theme
@@ -118,8 +99,37 @@ fig.update_layout(
 # fig.show()
 
 
+
+
+
+
+
 def app():
     st.markdown('Something here')
+
+    st.pyplot(fig_heatmap)
+
+    with st.expander("See the correlation plots for each borough"):
+        for borough in boroughs:
+            cmap = sns.diverging_palette(
+                250, 
+                15, 
+                s=75, 
+                l=40, 
+                n=9, 
+                center='light', 
+                as_cmap=True
+            )
+
+            matrix = df_merged_scaled[df_merged_scaled.borough == borough].corr(method='pearson')
+
+            # Create a mask
+            mask = np.triu(np.ones_like(matrix, dtype=bool))
+
+            fig = sns.heatmap(matrix, mask=mask, cmap=cmap, square=True, annot=True, fmt=".2f")
+            st.markdown(f'Showing correlation for {borough}')
+            st.pyplot(fig)
+
 
     st.markdown('## Heatmap of Water Quality, Recycling Data & Traffic Volume (oh my god')
     
