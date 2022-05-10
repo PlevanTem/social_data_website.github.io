@@ -152,10 +152,10 @@ def app():
             # Create a mask
             mask = np.triu(np.ones_like(matrix, dtype=bool))
 
-            fig_heatmap, ax = plt.subplots()
+            p, ax = plt.subplots()
             sns.heatmap(matrix, mask=mask, cmap=cmap, square=True, annot=True, fmt=".2f", ax=ax)
             st.markdown(f'Showing correlation for {borough}')
-            st.write(fig_heatmap)
+            st.write(p)
 
     st.markdown(
         """
