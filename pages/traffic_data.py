@@ -291,7 +291,7 @@ HeatMapWithTime(
 ).add_to(ny_map)
 
 
-
+@st.cache
 def app():
 
     st.markdown(
