@@ -13,3 +13,4 @@ geopandas
 pandasql
 geojson
 plotly
+SessionState
