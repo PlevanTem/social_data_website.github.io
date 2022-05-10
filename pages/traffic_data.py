@@ -296,22 +296,38 @@ def app():
 
     st.markdown(
         """
-        We all know that New York City has tons of traffic. 
+        If you have been in [New York City](https://en.wikipedia.org/wiki/New_York_City), and if you have tried to move around using vehicles, you have probably experienced that it's almost impossible to get through some of the most annoying traffic jams during rush hour... and that your wallet is empty after a taxi drive which was only "supposed to be a few blocks".
 
-        We want to investigate whether the New York traffic has an influence on the water quality.
+        But how bad is the traffic, exactly? And in which [borough](https://en.wikipedia.org/wiki/Borough) is there the most traffic?
 
-        Specifically, we would like to investigate whether huge amounts of traffic has a negative effect on the quality of the drinking water in New York City.
-
-        While air pollution is the most visible and studied environmental consequence of transportation systems, water pollution and wetlands issues are also of crucial importance. For instance; fuel, particles, and salt-laden runoff from streets and highways result in damage to roadside soil, vegetation and trees, ponds and water supplies ([source](https://courses.washington.edu/gmforum/topics/trans_water/trans_water.htm)). The impact from the road may also contribute to other forms of water pollution, like [water turbidity](https://www.usgs.gov/special-topics/water-science-school/science/turbidity-and-water). The Environmental Protection Agency (EPA) and many States have issued regulations implementing the CWA goal of achieving and maintaining a high standard of water quality in surface and ground waters ([source](https://www.epa.gov/ny)), and [The Clean Water Act](https://www.encyclopedia.com/earth-and-environment/ecology-and-environmentalism/environmental-studies/clean-water-act-1977) gives states the responsibility to monitor and assess their waters and report the results to the EPA.
-
-        However, Water contamination often is discovered long after it has occurred. This means that the practices of today may have effects on water quality well into the future, well before we understand the full ramifications of transportation and water issues. 
-
-        In this analysis, we are particularly interested in traffic and water quality in New York City.
-
-        We there took a look at [this dataset about New York traffic](https://data.cityofnewyork.us/Transportation/Traffic-Volume-Counts-2012-2013-/p424-amsu), containing roughly 27.000 observations of traffic volume counts collected by [The New York City Department of Transportation’s (NYC DOT)](https://www1.nyc.gov/html/dot/html/about/about.shtml) for New York Metropolitan Transportation Council (NYMTC) to validate the New York Best Practice Model (NYBPM) ([source](https://www.kaggle.com/datasets/new-york-city/ny-traffic-volume-counts-2012-2013)). (**Note**: Whilst conducting this work, the dataset has been taken off the [NYC Opendata website](https://opendata.cityofnewyork.us/) and thus the work mentioned in this part (traffic) cannot be dublicated).
+        """
+    )
 
 
-        The dataset only contained, in the time interval '2015-02-07' to '2021-05-09':
+    st.image(
+        'images/new_york_traffic.jpg',
+        caption='Picture of Traffic in New York City'
+    )
+
+    #However, Water contamination often is discovered long after it has occurred. This means that the practices of today may have effects on water quality well into the future, well before we understand the full ramifications of transportation and water issues. 
+    #The Environmental Protection Agency (EPA) and many States have issued regulations implementing the CWA goal of achieving and maintaining a high standard of water quality in surface and ground waters ([source](https://www.epa.gov/ny)), and [The Clean Water Act](https://www.encyclopedia.com/earth-and-environment/ecology-and-environmentalism/environmental-studies/clean-water-act-1977) gives states the responsibility to monitor and assess their waters and report the results to the EPA.
+    #To be able to answer this, we will investigate whether huge amounts of traffic has an effect on the quality of the drinking water in New York City.
+    
+    st.markdown(
+        """
+
+        While air pollution is the most visible and studied environmental consequence of transportation systems, water pollution and wetlands issues are also of crucial importance. For instance; fuel, particles, and salt-laden runoff from streets and highways result in damage to roadside soil, vegetation and trees, ponds and water supplies ([source](https://courses.washington.edu/gmforum/topics/trans_water/trans_water.htm)). 
+        The impact from the road may also contribute to other forms of water pollution, like [water turbidity](https://www.usgs.gov/special-topics/water-science-school/science/turbidity-and-water). 
+
+
+        Or does it?
+
+
+        Let us try to investigate this matter by providing you with a few plots that (hopefully) helps you understand how the traffic situation is in New York City and it's boroughs.
+        
+        We are looking at [this dataset about New York traffic](https://data.cityofnewyork.us/Transportation/Traffic-Volume-Counts-2012-2013-/p424-amsu), containing roughly 392.000 observations of traffic volume counts collected by [The New York City Department of Transportation’s (NYC DOT)](https://www1.nyc.gov/html/dot/html/about/about.shtml) for New York Metropolitan Transportation Council (NYMTC) to validate the New York Best Practice Model (NYBPM) ([source](https://www.kaggle.com/datasets/new-york-city/ny-traffic-volume-counts-2012-2013)).
+
+        The dataset used for this analysis contains observations in the time interval '2015-02-07' to '2021-05-09' and has the following (interesting) columns:
         - Date
         - Street name
         - Time
@@ -320,6 +336,8 @@ def app():
         Thus, the core steps in the preprocessing of this data consisted of:
         - Enriching the data with latitude and longitude pr "street name" (e.g. 156 Street)
         - Enriching the data with what borough (that is e.g. Queens, Staten Island etc..) these street belong to
+
+        After the dataset had been preprocessed, we ended up with roughly 27.000 rows.
         """
     )
 
@@ -387,9 +405,9 @@ def app():
     )
 
 
-    st.markdown(
-        """
-        **Findings**:
-        Some findings?
-        """
-    )
+    # st.markdown(
+    #     """
+    #     **Findings**:
+    #     Some findings?
+    #     """
+    # )

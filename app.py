@@ -32,12 +32,12 @@ app.add_page("Results", results.app)
 # The main app
 app.run()
 
-with st.expander("ℹ️ - About this app", expanded=False):
-    st.write(
-    """     
-    You can write something here that expands, possibly about how to interpret your plots
-    """
-)
+# with st.expander("ℹ️ - About this app", expanded=False):
+#     st.write(
+#     """     
+#     You can write something here that expands, possibly about how to interpret your plots
+#     """
+# )
 
 # Horizontal widget
 #st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
