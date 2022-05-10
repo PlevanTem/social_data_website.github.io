@@ -298,7 +298,7 @@ def app():
         """
         ## The End.
 
-        Now that you have seen our story, you can also visit our [GitHub page](https://github.com/ChristianRoesselDTU/social_data_website.github.io) to see how we did it! There, amongst other things, you will find a link to our [Notebook behind the scenes](https://github.com/ChristianRoesselDTU/social_data_website.github.io/raw/main/Explainer_Notebook_final.ipynb.zip) and [the data necessary to run it](https://github.com/ChristianRoesselDTU/social_data_website.github.io/raw/main/data.zip)
+        Now that you have seen our story, you can also visit our [GitHub page](https://github.com/ChristianRoesselDTU/social_data_website.github.io) to see how we did it! There, amongst other things, you will find a link to our [Notebook behind the scenes](https://github.com/ChristianRoesselDTU/social_data_website.github.io/raw/main/Explainer_Notebook_final.ipynb.zip) and [the data necessary to run it](https://github.com/ChristianRoesselDTU/social_data_website.github.io/raw/main/data.zip) (The notebook needs to be in the same folder as the data folder to run)
         """
 
     )
