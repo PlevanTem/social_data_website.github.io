@@ -11,7 +11,7 @@ from multipage import MultiPage
 from pages import recycling_data, results, traffic_data, water_data
 
 # Wide page
-st.set_page_config(page_title="Social Data And Visualization", page_icon="🐍", layout="wide", initial_sidebar_state="auto", menu_items=None,) 
+#st.set_page_config(page_title="Social Data And Visualization", page_icon="🐍", layout="wide", initial_sidebar_state="auto", menu_items=None,) 
 #
 ## Create an instance of the app 
 app = MultiPage()
