@@ -360,7 +360,7 @@ df_bins.groupby('borough')['site_type'].count()\
               color=['green','pink','red','blue','black'])
               
    
-@st.cache
+
 def app():
     st.markdown('# NYC Recycling')
     st.markdown('## Reducing Emissions from Our Waste Stream and Advancing a Circular Economy')

@@ -424,7 +424,7 @@ ax_years[1].set_ylabel('Fraction of samples with insufficient water quality', fo
 ax_years[1].set_ylim(0, 0.25)
 ax_years[1].axhline(0.01, color='#FF0000')
 
-@st.cache
+
 def app():
     st.markdown('### **What do we all need for living? - Air, Water and Love right?**')
     st.markdown(

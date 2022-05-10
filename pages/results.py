@@ -103,7 +103,7 @@ fig.update_layout(
 
 
 
-@st.cache
+
 def app():
     st.markdown(
         """
