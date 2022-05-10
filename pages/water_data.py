@@ -36,7 +36,7 @@ from streamlit_folium import folium_static
 # import warnings
 # warnings.filterwarnings("ignore")
 
-df = pd.read_csv('data/Water_quality.csv')
+df = pd.read_csv('data/Water_quality_new.csv')
 
 # get an overview of the Sample Sites in the 5 boroughs in NCY
 
@@ -51,8 +51,6 @@ for index,row in df_loc.iterrows():
     folium.CircleMarker([row['lat'], row['lon']], popup=f'Sample Site: {pop}, Borough: {bor}', color=row['color'],
             fill=True, opacity=0.5, radius = 2).add_to(ny_map)
 
-# Prepare year and month column
-df['Year - Month'] = df['Year'].astype('str') + "-" + df['Month'].astype('str')
 # sorted Year Month
 sorted_year_month = ['2015-1', '2015-2', '2015-3', '2015-4', '2015-5', '2015-6', '2015-7', '2015-8', '2015-9', '2015-10', 
           '2015-11', '2015-12', '2016-1', '2016-2', '2016-3', '2016-4', '2016-5', '2016-6', '2016-7', '2016-8', 
@@ -68,15 +66,19 @@ sorted_year_month = ['2015-1', '2015-2', '2015-3', '2015-4', '2015-5', '2015-6',
 ### Bokeh plot of the number of samples for different time periods
 
 ### prep the data 
+# Prepare year and month column
+
 df_no_samples_month_year  = df.groupby('Year - Month').agg({'Sample Number':'count'}).reset_index()
 df_no_samples_day = df.groupby('Day').agg({'Sample Number':'count'}).reset_index()
 df_no_samples_month = df.groupby('Month').agg({'Sample Number':'count'}).reset_index()
 df_no_samples_year = df.groupby('Year').agg({'Sample Number':'count'}).reset_index()
+df_no_samples_hour = df.groupby('Hour').agg({'Sample Number':'count'}).reset_index()
 
 cds_month_year = ColumnDataSource(df_no_samples_month_year)
 cds_day = ColumnDataSource(df_no_samples_day)
 cds_month = ColumnDataSource(df_no_samples_month)
 cds_year = ColumnDataSource(df_no_samples_year)
+cds_hour = ColumnDataSource(df_no_samples_hour)
 
 list_of_bars = ['Sample Number']
 colors = ['#0000FF']
@@ -98,11 +100,13 @@ p33 = figure(plot_width = 900, plot_height = 500,title="Number of samples taken 
             x_axis_label='Month', y_axis_label='Number of samples')
 p44 = figure(plot_width = 900, plot_height = 500,title="Number of samples taken in each Year 2015-2022", 
             x_axis_label='Year', y_axis_label='Number of samples')
+p55 = figure(plot_width = 900, plot_height = 500,title="Number of samples taken at the Hour of the Day", 
+            x_axis_label='Hour', y_axis_label='Number of samples')
 
 
 # create empty dictionaries for the bars and lists for the legend items
-bar11, bar22, bar33, bar44 = {}, {}, {}, {}
-items11, items22, items33, items44 = [], [],  [], []
+bar11, bar22, bar33, bar44, bar55 = {}, {}, {}, {}, {}
+items11, items22, items33, items44, items55 = [], [],  [], [], []
 
 # create the bars for the three plots
 for indx,i in enumerate(list_of_bars):
@@ -114,27 +118,35 @@ for indx,i in enumerate(list_of_bars):
     items33.append((dict_legend[i], [bar33[i]]))
     bar44[i] = p44.vbar(x='Year',  top=i, source=cds_year, legend_label=i, fill_color=colors[indx], width=0.5) 
     items44.append((dict_legend[i], [bar44[i]]))
-
+    bar55[i] = p55.vbar(x='Hour',  top=i, source=cds_hour, legend_label=i, fill_color=colors[indx], width=0.5) 
+    items55.append((dict_legend[i], [bar55[i]]))
+    
 p11.xaxis.major_label_orientation = "vertical"
 # customize the legend for the three plots
 customize_legend(p11, items11)
 customize_legend(p22, items22)
 customize_legend(p33, items33)
 customize_legend(p44, items44)
+customize_legend(p55, items55)
     
 # set the layout for the plots and add them to three tabs for the three categories
 l11 = layout([[p11]])
 l22 = layout([[p22]])
 l33 = layout([[p33]])
 l44 = layout([[p44]])
+l55 = layout([[p55]])
 
 tab11 = Panel(child=l11,title="Samples per Month and Year")
 tab22 = Panel(child=l22,title="Samples per Day of Month")
 tab33 = Panel(child=l33,title="Samples per Month of Year")
 tab44 = Panel(child=l44,title="Samples per Year")
+tab55 = Panel(child=l55,title="Samples per Hour of the Day")
 
-tabs_all = Tabs(tabs=[tab11, tab22, tab33, tab44])
+tabs_all = Tabs(tabs=[tab11, tab22, tab33, tab44, tab55])
 curdoc().add_root(tabs_all)
+
+p11.add_tools(HoverTool(tooltips=[('Finding', 'The distribution over the whole timeframe looks good, but what is that \
+                                    part for 2021 - 11?')]))
 
 p22.add_tools(HoverTool(tooltips=[('Finding', 'Looks like the number of samples collected at each day of the month \
                                     is distributed equally, great! But there is a lot less samples on the  31st of the \
@@ -149,8 +161,13 @@ p44.add_tools(HoverTool(tooltips=[('Findings', 'Looks like the number of samples
                                     for all years, great ! Only 2022 has a significant smaller amount of samples which is \
                                     because we are still in 2022')]))
 
+p55.add_tools(HoverTool(tooltips=[('Findings', 'As the samples are collected manually it is not surprising that most of the \
+                                    samples are collected during the usual workday between 7 and 12!')]))
+
+
 #display plot
 show(tabs_all)
+
 
 ### Plot the development of the water quality over time for each sample site
 fig_time = px.scatter_mapbox(df, lat="lat" , lon="lon", hover_name="Sample Site", color="Water_quality", opacity=0.5, animation_frame='Year - Month', 
