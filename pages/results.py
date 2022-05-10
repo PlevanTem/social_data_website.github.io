@@ -14,6 +14,8 @@ from streamlit_folium import folium_static
 import datetime
 from pandas.io.formats.format import Datetime64Formatter
 
+import streamlit.components.v1 as components
+
 # # Water quality data preprocessing
 # df_water = pd.read_csv('data/Water_quality.csv')
 # df_water['Year - Month'] = df_water['Year'].astype('str') + "-" + df_water['Month'].astype('str')
@@ -123,4 +125,9 @@ def app():
 
     st.markdown('## Heatmap of Water Quality, Recycling Data & Traffic Volume (oh my god')
     #st.plotly_chart(fig, use_container_width=True, height=600)
-    
+
+    st.header("test html import")
+    HtmlFile = open("htmls/df_merged.html", 'r', encoding='utf-8')
+    source_code = HtmlFile.read() 
+    #print(source_code)
+    components.html(source_code)
