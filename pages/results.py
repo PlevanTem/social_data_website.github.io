@@ -111,35 +111,62 @@ def app():
         """
     )
 
+
     st.markdown(
         """
-        ## Heatmap of Water Quality, Recycling Data & Traffic Volume (oh my god')
+        We want to create a cool machine learning model that will be albe to tell us something about whether traffic and recycling has an impact on the water quality in New York City
+        
+        Let us then have a look at how the different columns in our data correlate to one another, such that we can make a decision on whether a model for this data would be any good:
         """
     )
 
+    st.markdown(
+        """
+        Correlation plot of all the columns in our `df_merged`
+        """
+    )
     st.write(fig_heatmap)
 
-    # with st.expander("See the correlation plots for each borough"):
-    #     for borough in boroughs:
-    #         cmap = sns.diverging_palette(
-    #             250, 
-    #             15, 
-    #             s=75, 
-    #             l=40, 
-    #             n=9, 
-    #             center='light', 
-    #             as_cmap=True
-    #         )
+    st.markdown(
+        """
+        **Finding**:
 
-    #         matrix = df_merged_scaled[df_merged_scaled.borough == borough].corr(method='pearson')
+        From the correlation plot above, we can conclude that we see no significant correlation between the features. However, let's try to break it down per borough and see whether we find anything else useful in our analysis:
+        """
+    )
 
-    #         # Create a mask
-    #         mask = np.triu(np.ones_like(matrix, dtype=bool))
+    with st.expander("See the correlation plots for each borough"):
+        for borough in boroughs:
+            cmap = sns.diverging_palette(
+                250, 
+                15, 
+                s=75, 
+                l=40, 
+                n=9, 
+                center='light', 
+                as_cmap=True
+            )
 
-    #         fig_heatmap, ax = plt.subplots()
-    #         sns.heatmap(matrix, mask=mask, cmap=cmap, square=True, annot=True, fmt=".2f", ax=ax)
-    #         st.markdown(f'Showing correlation for {borough}')
-    #         st.write(fig)
+            matrix = df_merged_scaled[df_merged_scaled.borough == borough].corr(method='pearson')
+
+            # Create a mask
+            mask = np.triu(np.ones_like(matrix, dtype=bool))
+
+            fig_heatmap, ax = plt.subplots()
+            sns.heatmap(matrix, mask=mask, cmap=cmap, square=True, annot=True, fmt=".2f", ax=ax)
+            st.markdown(f'Showing correlation for {borough}')
+            st.write(fig_heatmap)
+
+    st.markdown(
+        """
+        **Findings**:
+
+        When we break down the correlation for each borough, we do see some interesting correlation between the recycling data, the traffic data and the water quality. 
+        This is basically what we wanted to show and thus what we wanted conduct a thorough analysis of, however, because of the limitations due to lack of data, we cannot say for sure that there in fact is a correlation between the features shown.
+
+        Due to limited resources (data-wise and time-wise), we were not able to find a dataset (or multiple datasets) that held enough data for us to conclude on an analysis like the above. However, research have shown that traffic and the amount of waste can have an impact of the water quality of certain neighbouthoods / boroughs.
+        """
+    )
 
     st.plotly_chart(fig, use_container_width=True, height=600)
     
