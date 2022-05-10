@@ -15,4 +15,4 @@ She the website (running and hosted on Streamlit framework and servers), click t
 
     
 ### Explainer Notebook
-- [**View the Explainer Notebook**](https://github.com/ChristianRoesselDTU/social_data_website.github.io/blob/main/Explainer_Notebook_final_v2.html)
+- [**View the Explainer Notebook**](https://github.com/ChristianRoesselDTU/social_data_website.github.io/raw/main/Explainer_Notebook_final.ipynb.zip)
