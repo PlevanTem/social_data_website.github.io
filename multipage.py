@@ -62,8 +62,10 @@ class MultiPage:
             3. `Traffic Data`
             4. `Results`
 
+            (you can find the website navigation the left of the page)
 
             We hope you enjoy the journey of our website 😊
+
 
             If you are curious about what is happening behind the scenes, you can visit our [GitHub page](https://github.com/ChristianRoesselDTU/social_data_website.github.io) to see how we did it! 
             
