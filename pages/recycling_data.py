@@ -359,39 +359,6 @@ df_bins.groupby('borough')['site_type'].count()\
               title='No. of trash bins in 5 boroughs',
               color=['green','pink','red','blue','black'])
               
-df_merged = pd.read_csv('data/df_merged.csv')
-
-import geojson
-with open('data/Borough Boundaries.geojson') as f:
-    gj = geojson.load(f)
-
-text = df_merged.apply(lambda row: f"""<br>Total collected:{round(row['TOTALCOLLECTED'],2)}T<br>Traffic Volume:{round(row['Traffic_Volume'],2)}""", axis=1),
-
-figsize=(20, 10)
-
-fig = px.choropleth_mapbox(df_merged,
-          geojson=gj, 
-          locations=df_merged.borough,
-          featureidkey="properties.boro_name",
-          center = {"lat": 40.70, "lon": -73.94},
-          mapbox_style="carto-positron",
-          opacity=0.5,
-          color='Residual Free Chlorine (mg/L)',
-          animation_group="borough",
-          hover_name="borough",
-          hover_data=text,
-          color_continuous_scale=px.colors.sequential.deep,
-          zoom=9,
-          range_color=(0,1.2),
-          title='Water Quality in New York City in combination with Recycling data and Traffic data',
-          animation_frame="date_str")
-
-fig.update_layout(
-    title_text='Water Quality in New York City in combination with Recycling data and Traffic data'
-)
-
-fig.show()
-          
    
 
 def app():
