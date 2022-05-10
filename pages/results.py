@@ -7,6 +7,8 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import plotly.io as pio
 
+import matplotlib.pyplot as plt
+
 import folium
 from streamlit_folium import folium_static
 
@@ -54,8 +56,8 @@ matrix = df_merged_scaled.corr(method='pearson')
 # Create a mask
 mask = np.triu(np.ones_like(matrix, dtype=bool))
 
-
-fig_heatmap = sns.heatmap(matrix, mask=mask, cmap=cmap, square=True, annot=True, fmt=".2f")
+fig_heatmap, ax = plt.subplots()
+sns.heatmap(matrix, mask=mask, cmap=cmap, square=True, annot=True, fmt=".2f", ax=ax)
 
 boroughs = sorted(df_merged.borough.unique().tolist())
 
@@ -126,7 +128,7 @@ fig.update_layout(
 def app():
     st.markdown('Something here')
 
-    st.pyplot(fig_heatmap)
+    st.write(fig_heatmap)
 
     st.markdown('## Heatmap of Water Quality, Recycling Data & Traffic Volume (oh my god')
     
