@@ -5,18 +5,13 @@ import matplotlib.pyplot as plt
 import plotly
 
 import streamlit as st
-from SessionState import _get_state
 
 # Custom imports 
 from multipage import MultiPage
 from pages import recycling_data, results, traffic_data, water_data
 
 # Wide page
-state = _get_state()
-
-state.page_config = st.set_page_config(page_title="Social Data And Visualization", page_icon="🐍", layout="wide", initial_sidebar_state="auto", menu_items=None,) 
-
-state.sync()
+st.set_page_config(page_title="Social Data And Visualization", page_icon="🐍", layout="wide", initial_sidebar_state="auto", menu_items=None,) 
 #
 ## Create an instance of the app 
 app = MultiPage()
