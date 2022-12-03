@@ -293,72 +293,51 @@ https://jingwen-z.github.io/how-to-draw-a-variety-of-maps-with-folium-in-python/
 
 """
 
-df_bins = pd.read_csv('https://data.cityofnewyork.us/resource/sxx4-xhzg.csv')
-df_bins.borough = df_bins.borough.apply(lambda x:'Brooklyn' if x=='Brooklyn ' else x)
-
-df_bins.head()
+df_bins = pd.read_csv('data/Public_Recycling_Bins.csv')
+#Adress format processing
+df_bins['site_location'] = df_bins['site_location'].apply(lambda x:x.split(' - ')[0])
+import geocoder
+key='At6R4K8VC6hPDNx5w6IkDBrm-YxLHlvxG0QMsvG9N97RnSYMYe0rfmwSgbV7igmE'
+df_bins['latitude'] = df_bins['site_location'].apply(lambda x:geocoder.bing(x,key=key).json['lat'] if geocoder.bing(x,key=key).json != None else None)
+df_bins['longitude'] = df_bins['site_location'].apply(lambda x:geocoder.bing(x,key=key).json['lng'] if geocoder.bing(x,key=key).json != None else None)
 
 df_bins.dropna(inplace=True)
 
 def boroughcolors(df):
-    if df['borough'] == 'Bronx':
+    if df['dsny_zone'] == 'BX':
+        return 'cadetblue'
+    elif df['dsny_zone'] == 'BKN':
         return 'green'
-    elif df['borough'] == 'Queens':
-        return 'blue'
-    elif df['borough'] == 'Manhattan':
+    elif df['dsny_zone'] == 'BKS':
+        return 'lightgreen'
+    elif df['dsny_zone'] == 'MAN':
+        return 'orange'
+    elif df['dsny_zone'] == 'QE':
         return 'black'
-    elif df['borough'] == 'Brooklyn':
-        return 'red'
+    elif df['dsny_zone'] == 'QW':
+        return 'blue'
     else:
         return 'pink'
 
 df_bins["color"] = df_bins.apply(boroughcolors, axis=1)
-df_bins.head()
 
 locations = df_bins[['latitude', 'longitude']]
 locationlist = locations.values.tolist()
-len(locationlist)
-locationlist[0]
-
-colormap = linear.YlGnBu_09.scale(min(collect_avg_by_cd['TOTALCOLLECTED']),max(collect_avg_by_cd['TOTALCOLLECTED']))
-
-style_function = lambda x: {
-    'fillColor': colormap(int(x['properties']['BOR_CD'])),
-    'color': 'balck',
-    'fillOpacity': 0.7
-}
 
 m = folium.Map(location=[40.70, -73.94], zoom_start=10, tiles='CartoDB positron')
-
+newline='\n'
+#draw point icons on map 
 for point in range(0, len(locationlist)):
-    folium.Marker(locationlist[point], 
-        popup=df_bins['park_site_name'].iloc[point],
+    popup_text = f"site type:{df_bins['site_type'].iloc[point]}{newline}paper_bins:{df_bins['paper_bins'].iloc[point]}{newline}mgp_bins:{df_bins['mgp_bins'].iloc[point]}{newline}"
+    folium.Marker(locationlist[point],
+        popup=popup_text,
         # icon address: https://lab.artlung.com/font-awesome-sample/
         icon=folium.Icon(icon='recycle', prefix='fa', color=df_bins['color'].iloc[point]),
-        tooltip=df_bins['address'].iloc[point],
+        tooltip=df_bins['site_location'].iloc[point],
     ).add_to(m)
 
-folium.GeoJson(
-    collect_avg_by_cd,
-    style_function=style_function,
-    tooltip=folium.GeoJsonTooltip(
-        fields=['TOTALCOLLECTED', 'BOROUGH', 'BOR_CD'],
-        aliases=['Total collection', 'Borough', 'Community district'],
-        localize=True
-    )
-).add_to(m)
-
-colormap.add_to(m)
-colormap.caption = 'Recycled collection amount'
-colormap.add_to(m)
-
-#m
-
-df_bins.groupby('borough')['site_type'].count()\
-    .sort_values().plot(kind='bar',
-              title='No. of trash bins in 5 boroughs',
-              color=['green','pink','red','blue','black'])
-              
+px.bar(df_bins.groupby('dsny_zone')['site_type'].count().sort_values(),
+    title='No. of trash bins by boroughs')
    
 
 def app():
@@ -434,6 +413,6 @@ def app():
         """
     )
     st.bar_chart(
-        df_bins.groupby('borough')['site_type'].count().sort_values()
+        df_bins.groupby('dsny_zone')['site_type'].count().sort_values()
     )
     
