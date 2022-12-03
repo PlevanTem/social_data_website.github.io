@@ -42,7 +42,7 @@ import folium
 from streamlit_folium import folium_static
 
 from datetime import datetime
-from IPython.display import display
+#from IPython.display import display
 import warnings
 warnings.filterwarnings("ignore")
 
