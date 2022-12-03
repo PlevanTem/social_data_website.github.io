@@ -1,4 +1,4 @@
-DSNY Zone,DSNY District,Site type,Site Location,Partner,Paper Bins,MGP Bins
+dsny_zone,dsny_district,site_type,site_location,partner,paper_bins,mgp_bins
 BKN,BKN02,CITY AGENCY,120 SCHERMERHORN ST - INSIDE BUILDING,DCAS,1,1
 BKN,BKN02,CITY AGENCY,141 LIVINGSTON ST - INSIDE BUILDING,DCAS,1,1
 BKN,BKN02,CITY AGENCY,210 JORALEMON ST - INSIDE BUILDING,DCAS,2,2
