@@ -16,8 +16,6 @@ from streamlit_folium import folium_static
 import datetime
 from pandas.io.formats.format import Datetime64Formatter
 
-import sklearn
-from sklearn import preprocessing
 from sklearn.preprocessing import MinMaxScaler
 import seaborn as sns
 
