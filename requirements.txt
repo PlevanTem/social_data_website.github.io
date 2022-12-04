@@ -2,6 +2,7 @@ altair
 pandas
 streamlit
 matplotlib
+scikit-learn
 sklearn
 numpy
 datetime
