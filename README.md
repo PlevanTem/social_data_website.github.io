@@ -11,7 +11,7 @@ This webpage holds the findings for the final project in the course 02806 Social
     
 ### Final website
 She the website (running and hosted on Streamlit framework and servers), click the following link:
-- [**View the website**](https://share.streamlit.io/christianroesseldtu/social_data_website.github.io/main/app.py)
+- [**View the website**](https://share.streamlit.io/PlevanTem/social_data_website.github.io/main/app.py)
 
     
 ### Explainer Notebook
