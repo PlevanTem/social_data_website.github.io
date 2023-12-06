@@ -57,7 +57,7 @@ df_monthly_collection_tonnage = pd.read_csv('data/DSNY_Monthly_Tonnage_Data.csv'
 
 df_monthly_collection_tonnage.shape
 
-print(df_monthly_collection_tonnage.head())
+st.dataframe(df_monthly_collection_tonnage.head())
 
 """## Preprocessing
 
