@@ -99,7 +99,6 @@ fig0.show()
 """**Findings:**   
 1. 
 """
-df_by_category = df_by_category.apply(lambda x: x.astype(float) if x.dtype.kind in 'biufc' else x)
 fig1 = px.bar(df_by_category.groupby('BOROUGH').mean())
 fig1.update_layout(title_text='NYC average collection amount(T) by category from 2015 to 2021',
          legend_title="Collection Type",)
