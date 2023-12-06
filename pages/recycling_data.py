@@ -57,7 +57,7 @@ df_monthly_collection_tonnage = pd.read_csv('data/DSNY_Monthly_Tonnage_Data.csv'
 
 df_monthly_collection_tonnage.shape
 
-df_monthly_collection_tonnage.head()
+print(df_monthly_collection_tonnage.head())
 
 """## Preprocessing
 
@@ -86,6 +86,7 @@ df_monthly_collection_tonnage = df_monthly_collection_tonnage[mask]
 
 mask2 = ((df_by_category['DATE'] >= '2015-01-01') & (df_by_category['DATE'] < '2022-01-01')) # start date
 df_by_category = df_by_category[mask2]
+df_by_category.head()
 
 """## Exploratory Data Analysis
 https://gis.stackexchange.com/questions/173835/point-in-polygon-geojson-using-shapely-python-returning-incorrect-results
